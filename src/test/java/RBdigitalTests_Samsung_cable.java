@@ -497,7 +497,7 @@ public class RBdigitalTests_Samsung_cable {
 
     @Test
     public void Test_08_RbdigitalEBookCheckout(){
-        WebDriverWait wait = new WebDriverWait(driver, 70);
+        WebDriverWait wait = new WebDriverWait(driver, 50);
 
         AndroidElement iconMenu = (AndroidElement) driver.findElement(By.id("com.ocd:id/top_icon_menu"));
         iconMenu.click();
