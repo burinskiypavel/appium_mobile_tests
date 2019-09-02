@@ -49,6 +49,7 @@ public class BaseTest {
         checkoutBtn.click();
     }
 
+    /*
     public void swipeVertical_(AppiumDriver<MobileElement> driver, double startPercentage, double finalPercentage, int duration){
     Dimension size = driver.manage().window().getSize();
     int width = (int) (size.width/2);
@@ -56,7 +57,9 @@ public class BaseTest {
     int endPoint = (int) (size.getHeight() * finalPercentage);
     new TouchAction(driver).press(PointOption.point(width, startPoint)).moveTo(PointOption.point(width, endPoint)).release().perform();
 }
+    */
 
+    /*
     public void Login_(){
         //WebDriverWait wait = new WebDriverWait(driver, 90);
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/login_button")));
@@ -84,7 +87,20 @@ public class BaseTest {
         driver.findElement(By.id("com.android.packageinstaller:id/permission_deny_button")).click();
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//*[@class='android.widget.TextView'][@text='AUDIOBOOKS']")));
     }
+    */
 
+    public void goToMagazinePage(WebDriverWait wait) {
+        wait = new WebDriverWait(driver, 30);
+        AndroidElement iconMenu = (AndroidElement) driver.findElement(By.id("com.ocd:id/top_icon_menu"));
+        iconMenu.click();
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='MAGAZINES & COMICS']")));
+        AndroidElement magazineComicTab = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='MAGAZINES & COMICS']"));
+        magazineComicTab.click();
+
+        AndroidElement firstFromListMagazine = (AndroidElement) driver.findElementsById("com.ocd:id/menu_child_name").get(1);
+        firstFromListMagazine.click();
+    }
 }
 
 

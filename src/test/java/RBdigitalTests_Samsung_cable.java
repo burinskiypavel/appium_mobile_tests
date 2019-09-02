@@ -136,17 +136,7 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
     public void Test_02_RbdigitalMagazineCheckout(){
         WebDriverWait wait = new WebDriverWait(driver, 90);
 
-        AndroidElement iconMenu = (AndroidElement) driver.findElement(By.id("com.ocd:id/top_icon_menu"));
-        iconMenu.click();
-
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='MAGAZINES & COMICS']")));
-        AndroidElement magazineComicTab = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='MAGAZINES & COMICS']"));
-        magazineComicTab.click();
-
-        //driver.findElementByXPath("(//*[@resource-id='com.ocd:id/menu_child_name'][@text='MAGAZINES']").click();
-
-        AndroidElement firstFromListMagazine = (AndroidElement) driver.findElementsById("com.ocd:id/menu_child_name").get(1);
-        firstFromListMagazine.click();
+        goToMagazinePage(wait);
 
 
         ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
