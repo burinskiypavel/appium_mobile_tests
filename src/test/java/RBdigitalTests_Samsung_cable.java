@@ -21,10 +21,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
-public class RBdigitalTests_Samsung_cable {
+public class RBdigitalTests_Samsung_cable extends BaseTest {
 
     //WebDriver driver;
-    AppiumDriver driver;
+    //AppiumDriver driver;
     //AndroidDriver driver;
     MainPage mainPage;
     BaseTest baseTest;
@@ -60,7 +60,7 @@ public class RBdigitalTests_Samsung_cable {
         cap.setCapability("appActivity", "com.ocd.activity.SplashActivity");
         driver = new AndroidDriver(new URL(" http://127.0.0.1:4723/wd/hub"), cap);
         mainPage = new MainPage(driver);
-        baseTest = new BaseTest(driver);
+        //baseTest = new BaseTest(driver);
         mainPage.Login();
     }
 
@@ -136,17 +136,7 @@ public class RBdigitalTests_Samsung_cable {
     public void Test_02_RbdigitalMagazineCheckout(){
         WebDriverWait wait = new WebDriverWait(driver, 90);
 
-        AndroidElement iconMenu = (AndroidElement) driver.findElement(By.id("com.ocd:id/top_icon_menu"));
-        iconMenu.click();
-
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='MAGAZINES & COMICS']")));
-        AndroidElement magazineComicTab = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='MAGAZINES & COMICS']"));
-        magazineComicTab.click();
-
-        //driver.findElementByXPath("(//*[@resource-id='com.ocd:id/menu_child_name'][@text='MAGAZINES']").click();
-
-        AndroidElement firstFromListMagazine = (AndroidElement) driver.findElementsById("com.ocd:id/menu_child_name").get(1);
-        firstFromListMagazine.click();
+        goToMagazinePage(wait);
 
 
         ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
@@ -168,8 +158,7 @@ public class RBdigitalTests_Samsung_cable {
             wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/activity_media_info_play")));
         }
 
-        AndroidElement checkoutBtn = (AndroidElement) driver.findElement(By.id("com.ocd:id/activity_media_info_play"));
-        checkoutBtn.click();
+        pressCheckout();
 
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/confirmation_checkbox")));
         AndroidElement confirmationCheckbox = (AndroidElement) driver.findElement(By.id("com.ocd:id/confirmation_checkbox"));
@@ -245,17 +234,10 @@ public class RBdigitalTests_Samsung_cable {
     public void Test_04_RbdigitalComicCheckout(){
         WebDriverWait wait = new WebDriverWait(driver, 50);
 
-        AndroidElement iconMenu = (AndroidElement) driver.findElement(By.id("com.ocd:id/top_icon_menu"));
-        iconMenu.click();
+        //AndroidElement iconMenu = (AndroidElement) driver.findElement(By.id("com.ocd:id/top_icon_menu"));
+        //iconMenu.click();
 
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='MAGAZINES & COMICS']")));
-        AndroidElement magazineComicTab = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='MAGAZINES & COMICS']"));
-        magazineComicTab.click();
-
-
-        AndroidElement secondFromListMagCom = (AndroidElement) driver.findElementsById("com.ocd:id/menu_child_name").get(2);
-        secondFromListMagCom.click();
-
+        goToComicsPage();
 
         ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
@@ -289,8 +271,7 @@ public class RBdigitalTests_Samsung_cable {
             wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/activity_media_info_play")));
         }
 
-        AndroidElement checkoutBtn = (AndroidElement) driver.findElement(By.id("com.ocd:id/activity_media_info_play"));
-        checkoutBtn.click();
+        pressCheckout();
 
         //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/confirmation_checkbox")));
         //AndroidElement confirmationCheckbox = (AndroidElement) driver.findElement(By.id("com.ocd:id/confirmation_checkbox"));
@@ -407,8 +388,7 @@ public class RBdigitalTests_Samsung_cable {
             wait.until(ExpectedConditions.elementToBeClickable(By.id("com.ocd:id/activity_media_info_play")));
         }
 
-        AndroidElement checkoutBtn = (AndroidElement) driver.findElement(By.id("com.ocd:id/activity_media_info_play"));
-        checkoutBtn.click();
+        pressCheckout();
 
         //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/confirmation_checkbox")));
         //AndroidElement confirmationCheckbox = (AndroidElement) driver.findElement(By.id("com.ocd:id/confirmation_checkbox"));
@@ -553,8 +533,7 @@ public class RBdigitalTests_Samsung_cable {
             wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/activity_media_info_play")));
         }
 
-        AndroidElement checkoutBtn = (AndroidElement) driver.findElement(By.id("com.ocd:id/activity_media_info_play"));
-        checkoutBtn.click();
+        pressCheckout();
 
         //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/confirmation_checkbox")));
         //AndroidElement confirmationCheckbox = (AndroidElement) driver.findElement(By.id("com.ocd:id/confirmation_checkbox"));
@@ -683,8 +662,7 @@ public class RBdigitalTests_Samsung_cable {
             wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/activity_media_info_play")));
         }
 
-        AndroidElement checkoutBtn = (AndroidElement) driver.findElement(By.id("com.ocd:id/activity_media_info_play"));
-        checkoutBtn.click();
+        pressCheckout();
 
         //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/confirmation_checkbox")));
         //AndroidElement confirmationCheckbox = (AndroidElement) driver.findElement(By.id("com.ocd:id/confirmation_checkbox"));
@@ -749,8 +727,7 @@ public class RBdigitalTests_Samsung_cable {
             wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/activity_media_info_play")));
         }
 
-        AndroidElement checkoutBtn = (AndroidElement) driver.findElement(By.id("com.ocd:id/activity_media_info_play"));
-        checkoutBtn.click();
+        pressCheckout();
 
         //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/confirmation_checkbox")));
         //AndroidElement confirmationCheckbox = (AndroidElement) driver.findElement(By.id("com.ocd:id/confirmation_checkbox"));
@@ -810,8 +787,7 @@ public class RBdigitalTests_Samsung_cable {
 
         String actualAudiobookDescription = driver.findElement(By.id("com.ocd:id/activity_media_info_description")).getText();
 
-        AndroidElement checkoutBtn = (AndroidElement) driver.findElement(By.id("com.ocd:id/activity_media_info_play"));
-        checkoutBtn.click();
+        pressCheckout();
 
         //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/confirmation_checkbox")));
         //AndroidElement confirmationCheckbox = (AndroidElement) driver.findElement(By.id("com.ocd:id/confirmation_checkbox"));
@@ -871,8 +847,7 @@ public class RBdigitalTests_Samsung_cable {
 
         String actualBookDescription = driver.findElement(By.id("com.ocd:id/activity_media_info_description")).getText();
 
-        AndroidElement checkoutBtn = (AndroidElement) driver.findElement(By.id("com.ocd:id/activity_media_info_play"));
-        checkoutBtn.click();
+        pressCheckout();
 
         //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/confirmation_checkbox")));
         //AndroidElement confirmationCheckbox = (AndroidElement) driver.findElement(By.id("com.ocd:id/confirmation_checkbox"));
