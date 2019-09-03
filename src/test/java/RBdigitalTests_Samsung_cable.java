@@ -42,10 +42,19 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
 
     @AfterMethod
     void AfterMethod() {
-        WebDriverWait wait = new WebDriverWait(driver, 40);
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/top_icon_menu")));
-        driver.findElementById("com.ocd:id/top_icon_menu").click();
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='HOME']")));
+        //WebDriverWait wait = new WebDriverWait(driver, 40);
+        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/top_icon_menu")));
+        //driver.findElementById("com.ocd:id/top_icon_menu").click();
+        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='HOME']")));
+        //driver.findElementByXPath("//android.widget.TextView[@text='HOME']").click();
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("com.ocd:id/top_icon_menu")));
+        //driver.findElementById("com.ocd:id/top_icon_menu").click();
+        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='HOME']")));
+        do{
+            driver.findElementById("com.ocd:id/top_icon_menu").click();
+        }
+        while (driver.findElementsByXPath("//android.widget.TextView[@text='HOME']").size() == 0);
         driver.findElementByXPath("//android.widget.TextView[@text='HOME']").click();
     }
 
