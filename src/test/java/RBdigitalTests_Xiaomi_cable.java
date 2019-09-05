@@ -31,6 +31,8 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
 
     String actualAudioBookTitle;
     String actualBookTitle;
+    String audiobookTitlewishlist;
+    String bookTitlewishlist;
 
 
     @AfterMethod
@@ -371,10 +373,10 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         //AndroidElement mag = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='US WEEKLY']"));
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/sort_spinner_text_view")));
 
-        AndroidElement titleAudioBook = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_title")).get(0);
+        AndroidElement titleAudioBook = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_title")).get(2);
         actualAudioBookTitle = titleAudioBook.getText();
 
-        AndroidElement secondAudioBook = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_container")).get(0);
+        AndroidElement secondAudioBook = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_container")).get(2);
         secondAudioBook.click();
 
         if(driver.findElements(By.xpath("//android.widget.TextView[@text='PLAY']")).size() != 0){
@@ -402,7 +404,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
 
     @Test
     public void Test_07_RbdigitalAudiobookReturn(){
-        WebDriverWait wait = new WebDriverWait(driver, 40);
+        WebDriverWait wait = new WebDriverWait(driver, 30);
 
         driver.findElementById("com.ocd:id/top_icon_menu").click();
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='HOME']")));
@@ -869,7 +871,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
     }
 
 
-    @Test
+    @Test(enabled = false)
     public void Test_14_AcornTV_Checkout() {
         WebDriverWait wait = new WebDriverWait(driver, 40);
 
@@ -894,8 +896,8 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         checkoutBtn.click();
     }
 
-    @Test
-    public void Test_15_AudioBook_Hold(){
+    @Test(enabled = false)
+    public void Test_15_1_AudioBook_Hold(){
         WebDriverWait wait = new WebDriverWait(driver, 40);
 
         AndroidElement iconMenu = (AndroidElement) driver.findElement(By.id("com.ocd:id/top_icon_menu"));
@@ -922,8 +924,18 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
             touchAction.press(PointOption.point(540, 900)).moveTo(PointOption.point(540, 830)).release().perform();
             count++;
         }
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("com.ocd:id/row_media_container")));
+
+
         AndroidElement firsAudiobook = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_container")).get(0);
         firsAudiobook.click();
+
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("com.ocd:id/activity_media_info_title")));
+        AndroidElement titleAudioBook = (AndroidElement) driver.findElements(By.id("com.ocd:id/activity_media_info_title")).get(0);
+        audiobookTitlewishlist = titleAudioBook.getText();
+
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.TextView[@text='ADD TO WISHLIST']")));
         AndroidElement addToWishlist = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='ADD TO WISHLIST']"));
         addToWishlist.click();
@@ -932,8 +944,71 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
     }
 
     @Test
-    public void Test_16_AudioBook_ReturnHold() {
+    public void Test_15_2_AudiobookWishlist() {
         WebDriverWait wait = new WebDriverWait(driver, 40);
+
+        AndroidElement iconMenu = (AndroidElement) driver.findElement(By.id("com.ocd:id/top_icon_menu"));
+        iconMenu.click();
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='BOOKS']")));
+        AndroidElement bookTab = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='BOOKS']"));
+        bookTab.click();
+
+
+        AndroidElement firstFromListAudioBook = (AndroidElement) driver.findElementsById("com.ocd:id/menu_child_name").get(1);
+        firstFromListAudioBook.click();
+
+
+        ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
+        driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='AUDIOBOOKS']")));
+
+        AndroidElement viewAllBtn = (AndroidElement) driver.findElement(By.id("com.ocd:id/titles_header_view_all"));
+        viewAllBtn.click();
+
+        ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
+        driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/pagination_two")));
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/filter_label")));
+
+        //TouchAction tB = new TouchAction(driver);
+
+        //int count = 0;
+        //while (driver.findElements(By.xpath("//android.widget.TextView[@text='X-MEN: DAYS OF FUTURE PAST - SPECIAL']")).size() == 0 && count < 10){
+
+        //    tB.press(PointOption.point(540, 640)).moveTo(PointOption.point(540, 600)).release().perform();
+
+        //}
+
+        //AndroidElement mag = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='US WEEKLY']"));
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/sort_spinner_text_view")));
+
+        AndroidElement titleAudioBook = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_title")).get(1);
+        audiobookTitlewishlist = titleAudioBook.getText();
+
+        AndroidElement secondAudioBook = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_container")).get(1);
+        secondAudioBook.click();
+
+        //if (driver.findElements(By.xpath("//android.widget.TextView[@text='PLAY']")).size() != 0) {
+        //    driver.findElement(By.xpath("//android.widget.TextView[@text='RETURN']")).click();
+        //    driver.findElement(By.xpath("//android.widget.Button[@text='YES']")).click();
+        //    wait.until(ExpectedConditions.elementToBeClickable(By.id("com.ocd:id/activity_media_info_play")));
+        //}
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.TextView[@text='ADD TO WISHLIST']")));
+        AndroidElement addToWishlist = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='ADD TO WISHLIST']"));
+        addToWishlist.click();
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.TextView[@text='ADD TO WISHLIST']")));
+
+    }
+
+    @Test
+    public void Test_16_AudioBook_ReturnWishlist() throws InterruptedException {
+        WebDriverWait wait = new WebDriverWait(driver, 30);
 
         driver.findElementById("com.ocd:id/top_icon_menu").click();
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='HOME']")));
@@ -943,7 +1018,9 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
 
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='MY ACCOUNT']")));
 
-        MobileElement wishlistTabMenu = (MobileElement) driver.findElements(By.xpath("//android.widget.TextView[@text='WISHLIST']"));
+        //Thread.sleep(3000);
+        //AndroidElement wishlistTabMenu = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='WISHLIST']"));
+        AndroidElement wishlistTabMenu = (AndroidElement) driver.findElements(By.id("com.ocd:id/menu_child_icon")).get(1);//2 hold
         wishlistTabMenu.click();
 
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='WISHLIST']")));
@@ -952,22 +1029,132 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         AndroidElement viewAllBtnForComics = (AndroidElement) driver.findElements(By.xpath("//android.widget.Button[@text='VIEW ALL']")).get(0);
         viewAllBtnForComics.click();
 
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/filter_label")));
+        ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
+        driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("com.ocd:id/row_media_x")));
 
         AndroidElement firstXBtn = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_x")).get(0);
         firstXBtn.click();
 
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//android.widget.TextView[@text='"+audiobookTitlewishlist+"']")));
+
+        //Thread.sleep(3000);
+        //List returnedAudioWishlist =  driver.findElements(By.xpath("//android.widget.TextView[@text='"+audiobookTitlewishlist+"']"));
+        //Assert.assertEquals(returnedAudioWishlist.size(), 0);
+    }
+
+    @Test
+    public void Test_17_EBookWishlist() {
+        WebDriverWait wait = new WebDriverWait(driver, 40);
+
+        AndroidElement iconMenu = (AndroidElement) driver.findElement(By.id("com.ocd:id/top_icon_menu"));
+        iconMenu.click();
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='BOOKS']")));
+        AndroidElement bookTab = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='BOOKS']"));
+        bookTab.click();
+
+
+        AndroidElement firstFromListAudioBook = (AndroidElement) driver.findElementsById("com.ocd:id/menu_child_name").get(2);
+        firstFromListAudioBook.click();
+
+
+        ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
+        driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
+
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='EBOOKS']")));
+
+        AndroidElement viewAllBtn = (AndroidElement) driver.findElement(By.id("com.ocd:id/titles_header_view_all"));
+        viewAllBtn.click();
+
+        ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
+        driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/pagination_two")));
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/filter_label")));
+
+
+        //AndroidElement mag = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='US WEEKLY']"));
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/sort_spinner_text_view")));
+
+
+        AndroidElement title = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_title")).get(2);
+        bookTitlewishlist = title.getText();
+
+        AndroidElement secondEBook = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_container")).get(2);
+        secondEBook.click();
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.TextView[@text='ADD TO WISHLIST']")));
+        AndroidElement addToWishlist = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='ADD TO WISHLIST']"));
+        addToWishlist.click();
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.TextView[@text='ADD TO WISHLIST']")));
+    }
+
+    @Test
+    public void Test_18_Ebook_ReturnWishlist() throws InterruptedException {
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+
+        driver.findElementById("com.ocd:id/top_icon_menu").click();
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='HOME']")));
+
+        AndroidElement myAccountTabMenu = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='MY ACCOUNT']"));
+        myAccountTabMenu.click();
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='MY ACCOUNT']")));
+
+        //Thread.sleep(3000);
+        //AndroidElement wishlistTabMenu = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='WISHLIST']"));
+        AndroidElement wishlistTabMenu = (AndroidElement) driver.findElements(By.id("com.ocd:id/menu_child_icon")).get(1);//2 hold
+        wishlistTabMenu.click();
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='WISHLIST']")));
+
+        TouchAction tA = new TouchAction(driver);
+
+        int count = 0;
+        while (driver.findElements(By.xpath("//android.widget.TextView[@text='NEWSPAPERS']")).size() == 0 && count < 7){
+
+            tA.press(PointOption.point(540, 640)).moveTo(PointOption.point(540, 600)).release().perform();
+            count++;
+        }
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.Button[@text='VIEW ALL']")));
+        AndroidElement viewAllBtnForComics = (AndroidElement) driver.findElements(By.xpath("//android.widget.Button[@text='VIEW ALL']")).get(0);
+        viewAllBtnForComics.click();
+
+
+        ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
+        driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
+
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("com.ocd:id/row_media_x")));
+
+        AndroidElement firstXBtn = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_x")).get(0);
+        firstXBtn.click();
+
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//android.widget.TextView[@text='"+bookTitlewishlist+"']")));
+
+        //Thread.sleep(700);
+        //List returnedAudioWishlist = driver.findElements(By.xpath("//android.widget.TextView[@text='"+bookTitlewishlist+"']"));
+        //Assert.assertEquals(ComicBeforeReturn, "THE PASTOR'S KID");
+        //Assert.assertEquals(returnedAudioWishlist.size(), 0);
     }
 
 
 
 
-    public void swipeVertical(AppiumDriver<MobileElement> driver, double startPercentage, double finalPercentage, int duration){
-        Dimension size = driver.manage().window().getSize();
-        int width = (int) (size.width/2);
-        int startPoint = (int) (size.getHeight() * startPercentage);
-        int endPoint = (int) (size.getHeight() * finalPercentage);
-        new TouchAction(driver).press(PointOption.point(width, startPoint)).moveTo(PointOption.point(width, endPoint)).release().perform();
+    //public void swipeVertical(AppiumDriver<MobileElement> driver, double startPercentage, double finalPercentage, int duration){
+    //    Dimension size = driver.manage().window().getSize();
+     //   int width = (int) (size.width/2);
+    //    int startPoint = (int) (size.getHeight() * startPercentage);
+   //     int endPoint = (int) (size.getHeight() * finalPercentage);
+    //    new TouchAction(driver).press(PointOption.point(width, startPoint)).moveTo(PointOption.point(width, endPoint)).release().perform();
 
-    }
+   // }
 }
