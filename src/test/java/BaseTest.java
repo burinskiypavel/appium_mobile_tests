@@ -44,6 +44,87 @@ public class BaseTest {
         secondFromListMagCom.click();
     }
 
+    public void goToMagazinePage() {
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        AndroidElement iconMenu = (AndroidElement) driver.findElement(By.id("com.ocd:id/top_icon_menu"));
+        iconMenu.click();
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='MAGAZINES & COMICS']")));
+        AndroidElement magazineComicTab = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='MAGAZINES & COMICS']"));
+        magazineComicTab.click();
+
+        AndroidElement firstFromListMagazine = (AndroidElement) driver.findElementsById("com.ocd:id/menu_child_name").get(1);
+        firstFromListMagazine.click();
+    }
+
+    public void goToWishlistPage() {
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        driver.findElementById("com.ocd:id/top_icon_menu").click();
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='HOME']")));
+
+        AndroidElement myAccountTabMenu = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='MY ACCOUNT']"));
+        myAccountTabMenu.click();
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='MY ACCOUNT']")));
+
+        //AndroidElement wishlistTabMenu = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='WISHLIST']"));
+        AndroidElement wishlistTabMenu = (AndroidElement) driver.findElements(By.id("com.ocd:id/menu_child_icon")).get(1);//2 hold
+        wishlistTabMenu.click();
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='WISHLIST']")));
+    }
+
+    public void goToCheckedOutPage() {
+        WebDriverWait wait = new WebDriverWait(driver, 40);
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("com.ocd:id/top_icon_menu")));
+        driver.findElementById("com.ocd:id/top_icon_menu").click();
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='CHECKED OUT']")));
+        AndroidElement checkedOUTTabMenu = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='CHECKED OUT']"));
+        checkedOUTTabMenu.click();
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='CHECKED OUT']")));
+    }
+
+    public void goToAudiobookPage() {
+        WebDriverWait wait = new WebDriverWait(driver, 40);
+        AndroidElement iconMenu = (AndroidElement) driver.findElement(By.id("com.ocd:id/top_icon_menu"));
+        iconMenu.click();
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='BOOKS']")));
+        AndroidElement bookTab = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='BOOKS']"));
+        bookTab.click();
+
+        AndroidElement firstFromListAudioBook = (AndroidElement) driver.findElementsById("com.ocd:id/menu_child_name").get(1);
+        firstFromListAudioBook.click();
+
+        ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
+        driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='AUDIOBOOKS']")));
+    }
+
+    public void goToEBookPage() {
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        AndroidElement iconMenu = (AndroidElement) driver.findElement(By.id("com.ocd:id/top_icon_menu"));
+        iconMenu.click();
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='BOOKS']")));
+        AndroidElement bookTab = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='BOOKS']"));
+        bookTab.click();
+
+        AndroidElement firstFromListAudioBook = (AndroidElement) driver.findElementsById("com.ocd:id/menu_child_name").get(2);
+        firstFromListAudioBook.click();
+
+        ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
+        driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='EBOOKS']")));
+    }
+
     public void pressCheckout() {
         AndroidElement checkoutBtn = (AndroidElement) driver.findElement(By.id("com.ocd:id/activity_media_info_play"));
         checkoutBtn.click();
@@ -89,18 +170,7 @@ public class BaseTest {
     }
     */
 
-    public void goToMagazinePage(WebDriverWait wait) {
-        wait = new WebDriverWait(driver, 30);
-        AndroidElement iconMenu = (AndroidElement) driver.findElement(By.id("com.ocd:id/top_icon_menu"));
-        iconMenu.click();
 
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='MAGAZINES & COMICS']")));
-        AndroidElement magazineComicTab = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='MAGAZINES & COMICS']"));
-        magazineComicTab.click();
-
-        AndroidElement firstFromListMagazine = (AndroidElement) driver.findElementsById("com.ocd:id/menu_child_name").get(1);
-        firstFromListMagazine.click();
-    }
 }
 
 
