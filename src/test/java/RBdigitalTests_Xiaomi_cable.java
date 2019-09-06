@@ -8,6 +8,7 @@ import io.appium.java_client.android.AndroidKeyCode;
 import io.appium.java_client.touch.offset.PointOption;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -750,8 +751,8 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
     }
 
 
-    @Test(enabled = false)
-    public void Test_14_AcornTV_Checkout() {
+    @Test
+    public void Test_14_1_AcornTV_Checkout() {
         WebDriverWait wait = new WebDriverWait(driver, 40);
 
         driver.findElementById("com.ocd:id/top_icon_menu").click();
@@ -773,6 +774,61 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("access")));
         AndroidElement checkoutBtn = (AndroidElement) driver.findElement(By.id("access"));
         checkoutBtn.click();
+
+        ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
+        driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("close")));
+        WebElement acseptAlert = driver.findElement(By.id("close"));
+        acseptAlert.click();
+
+        AndroidElement accessBtn = (AndroidElement) driver.findElement(By.xpath("//android.widget.Button[@text='ACCESS']"));
+        accessBtn.click();
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("Welcome back to Acorn TV")));
+        Assert.assertTrue(driver.findElement(By.id("Welcome back to Acorn TV")).isDisplayed());
+
+    }
+
+    @Test
+    public void Test_14_2_AcornTV_ReturnCheckout() throws InterruptedException {
+        WebDriverWait wait = new WebDriverWait(driver, 40);
+
+        goToCheckedOutPage();
+
+        TouchAction tA = new TouchAction(driver);
+
+        int count = 0;
+        while (driver.findElements(By.xpath("//android.widget.TextView[@text='ENTERTAINMENT']")).size() == 0 && count < 14){
+
+            tA.press(PointOption.point(540, 625)).moveTo(PointOption.point(540, 600)).release().perform();
+            count++;
+        }
+
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.Button[@text='VIEW ALL']")));
+        Thread.sleep(1500);
+        AndroidElement viewAllBtnForComics = (AndroidElement) driver.findElements(By.xpath("//android.widget.Button[@text='VIEW ALL']")).get(1);
+        viewAllBtnForComics.click();
+
+
+
+        ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
+        driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
+
+
+        AndroidElement firstXBtn = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_x")).get(0);
+        firstXBtn.click();
+
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.Button[@text='YES']")));
+        AndroidElement acseptAlert = (AndroidElement) driver.findElement(By.xpath("//android.widget.Button[@text='YES']"));
+        acseptAlert.click();
+
+        //Assert.assertTrue(driver.findElement(By.id("access")).isDisplayed());
+
     }
 
     @Test(enabled = false)
