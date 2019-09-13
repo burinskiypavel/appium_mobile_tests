@@ -37,9 +37,16 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
 
 
     @AfterMethod
-    void AfterMethod() {
+    void AfterMethod() throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, 30);
         wait.until(ExpectedConditions.elementToBeClickable(By.id("com.ocd:id/top_icon_menu")));
+
+        if(driver.findElements(By.id("This service is temporarily inaccessible. Please try again later.")).size()!=0){
+            ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
+            Thread.sleep(400);
+            ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
+
+        }
         //driver.findElementById("com.ocd:id/top_icon_menu").click();
         //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='HOME']")));
         do{
@@ -752,7 +759,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
 
 
     @Test
-    public void Test_14_1_AcornTV_Checkout() {
+    public void Test_14_1_AcornTV_Checkout() throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, 40);
 
         driver.findElementById("com.ocd:id/top_icon_menu").click();
@@ -789,6 +796,10 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("Welcome back to Acorn TV")));
         Assert.assertTrue(driver.findElement(By.id("Welcome back to Acorn TV")).isDisplayed());
 
+        ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
+        Thread.sleep(400);
+        ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
+
     }
 
     @Test
@@ -808,7 +819,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
 
 
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.Button[@text='VIEW ALL']")));
-        Thread.sleep(1500);
+        Thread.sleep(1700);
         AndroidElement viewAllBtnForComics = (AndroidElement) driver.findElements(By.xpath("//android.widget.Button[@text='VIEW ALL']")).get(1);
         viewAllBtnForComics.click();
 
