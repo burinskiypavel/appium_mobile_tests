@@ -112,7 +112,6 @@ public class RBdigitalTests_Xiaomi_cable_2 extends BaseTest {
 
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.TextView[@text='DESCRIPTION']")));
 
-
         if (driver.findElements(By.xpath("//android.widget.TextView[@text='REMOVE HOLD']")).size() != 0) {
             driver.findElement(By.xpath("//android.widget.TextView[@text='REMOVE HOLD']")).click();
             wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.TextView[@text='HOLD']")));
@@ -128,7 +127,7 @@ public class RBdigitalTests_Xiaomi_cable_2 extends BaseTest {
 
     @Test
     public void Test_20_AudioBook_ReturnHold() throws InterruptedException {
-        WebDriverWait wait = new WebDriverWait(driver, 30);
+        WebDriverWait wait = new WebDriverWait(driver, 20);
 
         goToHoldPage();
 
@@ -184,12 +183,12 @@ public class RBdigitalTests_Xiaomi_cable_2 extends BaseTest {
         AndroidElement titleEBook = (AndroidElement) driver.findElement(By.id("com.ocd:id/activity_media_info_title"));
         ebookHold = titleEBook.getText();
 
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.TextView[@text='DESCRIPTION']")));
 
-        //if (driver.findElements(By.xpath("//android.widget.TextView[@text='PLAY']")).size() != 0) {
-        //    driver.findElement(By.xpath("//android.widget.TextView[@text='RETURN']")).click();
-        //    driver.findElement(By.xpath("//android.widget.Button[@text='YES']")).click();
-        //    wait.until(ExpectedConditions.elementToBeClickable(By.id("com.ocd:id/activity_media_info_play")));
-        //}
+        if (driver.findElements(By.xpath("//android.widget.TextView[@text='REMOVE HOLD']")).size() != 0) {
+            driver.findElement(By.xpath("//android.widget.TextView[@text='REMOVE HOLD']")).click();
+            wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.TextView[@text='HOLD']")));
+        }
 
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.TextView[@text='HOLD']")));
         AndroidElement hold = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='HOLD']"));
@@ -201,7 +200,7 @@ public class RBdigitalTests_Xiaomi_cable_2 extends BaseTest {
 
     @Test
     public void Test_22_eBook_ReturnHold() throws InterruptedException {
-        WebDriverWait wait = new WebDriverWait(driver, 30);
+        WebDriverWait wait = new WebDriverWait(driver, 20);
 
         goToHoldPage();
 
@@ -213,12 +212,16 @@ public class RBdigitalTests_Xiaomi_cable_2 extends BaseTest {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
         driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
 
-        TouchAction tA = new TouchAction(driver);
-        int count = 0;
-        while (driver.findElements(By.xpath("//android.widget.TextView[@text='"+ebookHold+"']")).size() == 0 && count < 7){
 
-            tA.press(PointOption.point(540, 640)).moveTo(PointOption.point(540, 600)).release().perform();
-            count++;
+        ebookHold = ebookHold.toUpperCase();
+        if(driver.findElements(By.xpath("//android.widget.TextView[@text='"+ebookHold+"']")).size() == 0) {
+            TouchAction tA = new TouchAction(driver);
+            int count = 0;
+            while (driver.findElements(By.xpath("//android.widget.TextView[@text='" + ebookHold + "']")).size() == 0 && count < 7) {
+
+                tA.press(PointOption.point(540, 640)).moveTo(PointOption.point(540, 600)).release().perform();
+                count++;
+            }
         }
 
         wait.until(ExpectedConditions.elementToBeClickable(By.id("com.ocd:id/row_media_x")));
