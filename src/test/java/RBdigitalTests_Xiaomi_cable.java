@@ -662,7 +662,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.EditText[@text='Title']")));
 
         AndroidElement nameEdit = (AndroidElement) driver.findElement(By.xpath("//android.widget.EditText[@text='Name']"));
-        nameEdit.sendKeys("KINGS OF THE YUKON");
+        nameEdit.sendKeys("KINGS OF THE EARTH");
 
         //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='Minisulk']")));
 
