@@ -20,7 +20,7 @@ public class MainPage {
         this.driver = driver2001;
     }
 
-    public void Login(){
+    public void Login(String username, String password){
         WebDriverWait wait = new WebDriverWait(driver, 90);
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/login_button")));
         MobileElement loginBtn = (MobileElement) driver.findElement(By.id("com.ocd:id/login_button"));
@@ -33,7 +33,7 @@ public class MainPage {
 
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/add_profile_user")));
         AndroidElement userName = (AndroidElement) driver.findElement(By.id("com.ocd:id/add_profile_user"));
-        userName.sendKeys("qauser");
+        userName.sendKeys(username);
 
         if (((AndroidDriver) driver).isKeyboardShown()) {
             ((AppiumDriver) driver).hideKeyboard();
@@ -54,8 +54,8 @@ public class MainPage {
         AndroidElement RbdigitalLibrary = (AndroidElement) driver.findElement(By.xpath("//*[@class='android.widget.TextView'][@text='RBdigital Library']"));
         RbdigitalLibrary.click();
 
-        AndroidElement password = (AndroidElement) driver.findElement(By.id("com.ocd:id/add_profile_password"));
-        password.sendKeys("password1");
+        AndroidElement password1 = (AndroidElement) driver.findElement(By.id("com.ocd:id/add_profile_password"));
+        password1.sendKeys(password);
 
         AndroidElement passwordSubmit = (AndroidElement) driver.findElement(By.id("com.ocd:id/add_profile_password_submit"));
         passwordSubmit.click();

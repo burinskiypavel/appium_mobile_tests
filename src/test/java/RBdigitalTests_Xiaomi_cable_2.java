@@ -68,7 +68,7 @@ public class RBdigitalTests_Xiaomi_cable_2 extends BaseTest {
         driver = new AndroidDriver(new URL(" http://127.0.0.1:4723/wd/hub"), cap);
         mainPage = new MainPage(driver);
         //baseTest = new BaseTest(driver);
-        mainPage.Login();
+        mainPage.Login("qauser", "password1");
 
     }
 
