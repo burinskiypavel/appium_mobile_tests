@@ -157,7 +157,7 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
         while (driver.findElements(By.xpath("//android.widget.TextView[@text='THE ECONOMIST']")).size() == 0 && count < 7){
 
             tA.press(PointOption.point(540, 640)).moveTo(PointOption.point(540, 600)).release().perform();
-
+            count++;
         }
 
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='THE ECONOMIST']")));
@@ -739,7 +739,7 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
         //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.EditText[@text='Title']")));
 
         AndroidElement nameEdit = (AndroidElement) driver.findElement(By.xpath("//android.widget.EditText[@text='Name']"));
-        nameEdit.sendKeys("KINGS OF THE YUKON");
+        nameEdit.sendKeys("KINGS OF THE EARTH");
 
         //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='Minisulk']")));
 
@@ -750,7 +750,7 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
         driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
 
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='KINGS OF THE YUKON']")));
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='KINGS OF THE EARTH']")));
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='AUDIOBOOKS']")));
 
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/sort_spinner_text_view")));
@@ -782,7 +782,7 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='CHECKOUT']")));
 
         Assert.assertTrue(driver.findElement(By.xpath("//android.widget.TextView[@text='CHECKOUT']")).isDisplayed());
-        Assert.assertTrue(actualAudiobookDescription.contains("A stunning new voice in nature writing makes an epic journey along the Yukon River to give us the stories of its people and its protagonist"));
+        Assert.assertTrue(actualAudiobookDescription.contains("Author of the award-winning novel"));
     }
 
 
