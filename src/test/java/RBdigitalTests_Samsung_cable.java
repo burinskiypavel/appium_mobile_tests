@@ -8,6 +8,7 @@ import io.appium.java_client.android.AndroidKeyCode;
 import io.appium.java_client.touch.offset.PointOption;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -33,6 +34,8 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
     String actualBookTitle;
     String bookTitlewishlist;
     String audiobookTitlewishlist;
+    String ebookHold;
+    String audiobookHold;
 
 
 
@@ -831,7 +834,7 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
 
 
     @Test(enabled = false)
-    public void Test_14_AcornTV_Checkout() {
+    public void Test_14_1_AcornTV_Checkout() throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, 30);
 
         driver.findElementById("com.ocd:id/top_icon_menu").click();
@@ -847,17 +850,85 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
 
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.view.View[@text='800words']")));
 
-        AndroidElement acornElement800words = (AndroidElement) driver.findElement(By.xpath("//android.view.View[@text='800words']"));
-        acornElement800words.click();
+        int count = 0;
+        do {
+            AndroidElement acornElement800words = (AndroidElement) driver.findElement(By.xpath("//android.view.View[@text='800words']"));
+            acornElement800words.click();
+            count++;
+        }
+        while (driver.findElements(By.id("access")).size() == 0 && count < 7);
 
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("access")));
-        AndroidElement checkoutBtn = (AndroidElement) driver.findElement(By.id("access"));
-        checkoutBtn.click();
+
+        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.view.View[@text='800words']")));
+
+        do {
+            AndroidElement checkoutBtn = (AndroidElement) driver.findElement(By.id("access"));
+            checkoutBtn.click();
+        }
+        while (driver.findElements(By.id("access")).size() != 0);
+
+        ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
+        driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("close")));
+        WebElement acseptAlert = driver.findElement(By.id("close"));
+        acseptAlert.click();
+
+        AndroidElement accessBtn = (AndroidElement) driver.findElement(By.xpath("//android.widget.Button[@text='ACCESS']"));
+        accessBtn.click();
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("Welcome back to Acorn TV")));
+        Assert.assertTrue(driver.findElement(By.id("Welcome back to Acorn TV")).isDisplayed());
+
+        ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
+        Thread.sleep(400);
+        ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
+    }
+
+    @Test(enabled = false)
+    public void Test_14_2_AcornTV_ReturnCheckout() throws InterruptedException {
+        WebDriverWait wait = new WebDriverWait(driver, 40);
+
+        goToCheckedOutPage();
+
+        TouchAction tA = new TouchAction(driver);
+
+        int count = 0;
+        while (driver.findElements(By.xpath("//android.widget.TextView[@text='ENTERTAINMENT']")).size() == 0 && count < 14){
+
+            tA.press(PointOption.point(540, 625)).moveTo(PointOption.point(540, 600)).release().perform();
+            count++;
+        }
+
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.Button[@text='VIEW ALL']")));
+        Thread.sleep(1700);
+        AndroidElement viewAllBtnForComics = (AndroidElement) driver.findElements(By.xpath("//android.widget.Button[@text='VIEW ALL']")).get(1);
+        viewAllBtnForComics.click();
+
+
+
+        ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
+        driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
+
+
+        AndroidElement firstXBtn = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_x")).get(0);
+        firstXBtn.click();
+
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.Button[@text='YES']")));
+        AndroidElement acseptAlert = (AndroidElement) driver.findElement(By.xpath("//android.widget.Button[@text='YES']"));
+        acseptAlert.click();
+
+        //Assert.assertTrue(driver.findElement(By.id("access")).isDisplayed());
 
     }
 
+
     @Test
-    public void Test_15_2_AudiobookWishlist() {
+    public void Test_15_AudiobookWishlist() {
         WebDriverWait wait = new WebDriverWait(driver, 40);
 
         goToAudiobookPage();
@@ -902,7 +973,7 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.TextView[@text='ADD TO WISHLIST']")));
 
     }
-//tutu
+
     @Test
     public void Test_16_AudioBook_ReturnWishlist() throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, 30);
@@ -997,6 +1068,169 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
         //Thread.sleep(700);
         //List returnedAudioWishlist = driver.findElements(By.xpath("//android.widget.TextView[@text='"+bookTitlewishlist+"']"));
         //Assert.assertEquals(ComicBeforeReturn, "THE PASTOR'S KID");
+        //Assert.assertEquals(returnedAudioWishlist.size(), 0);
+    }
+
+    @Test
+    public void Test_19_AudiobookHold() {
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+
+        goToAudiobookPage();
+
+        TouchAction tA = new TouchAction(driver);
+
+        int count = 0;
+        while (driver.findElements(By.xpath("//android.widget.TextView[@text='MOST POPULAR']")).size() == 0 && count < 7){
+
+            tA.press(PointOption.point(540, 630)).moveTo(PointOption.point(540, 600)).release().perform();
+            count++;
+        }
+
+        //AndroidElement viewAllBtn = (AndroidElement) driver.findElements(By.id("com.ocd:id/titles_header_view_all")).get(1);
+        //viewAllBtn.click();
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.Button[@text='VIEW ALL']")));
+        AndroidElement viewAllBtnForComics = (AndroidElement) driver.findElements(By.xpath("//android.widget.Button[@text='VIEW ALL']")).get(0);
+        viewAllBtnForComics.click();
+
+        ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
+        driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/pagination_two")));
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/filter_label")));
+
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/sort_spinner_text_view")));
+
+        AndroidElement titleAudioBook = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_title")).get(0);
+        audiobookHold = titleAudioBook.getText();
+
+        AndroidElement firstAudioBook = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_container")).get(0);
+        firstAudioBook.click();
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.TextView[@text='DESCRIPTION']")));
+
+        if (driver.findElements(By.xpath("//android.widget.TextView[@text='REMOVE HOLD']")).size() != 0) {
+            driver.findElement(By.xpath("//android.widget.TextView[@text='REMOVE HOLD']")).click();
+            wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.TextView[@text='HOLD']")));
+        }
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.TextView[@text='HOLD']")));
+        AndroidElement hold = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='HOLD']"));
+        hold.click();
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.TextView[@text='HOLD']")));
+
+    }
+
+    @Test
+    public void Test_20_AudioBook_ReturnHold() throws InterruptedException {
+        WebDriverWait wait = new WebDriverWait(driver, 20);
+
+        goToHoldPage();
+
+        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.Button[@text='VIEW ALL']")));
+        //AndroidElement viewAllBtnForComics = (AndroidElement) driver.findElements(By.xpath("//android.widget.Button[@text='VIEW ALL']")).get(0);
+        //viewAllBtnForComics.click();
+
+        ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
+        driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
+
+        TouchAction touchAction = new TouchAction(driver);
+        touchAction.press(PointOption.point(540, 500)).moveTo(PointOption.point(540, 800)).release().perform();
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("com.ocd:id/row_media_x")));
+
+        AndroidElement firstXBtn = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_x")).get(0);
+        firstXBtn.click();
+
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//android.widget.TextView[@text='"+audiobookHold+"']")));
+
+        //Thread.sleep(3000);
+        //List returnedAudioWishlist =  driver.findElements(By.xpath("//android.widget.TextView[@text='"+audiobookTitlewishlist+"']"));
+        //Assert.assertEquals(returnedAudioWishlist.size(), 0);
+    }
+
+    @Test
+    public void Test_21_EBookHold() {
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+
+        goToEBookPage();
+
+        TouchAction tA = new TouchAction(driver);
+        int count = 0;
+        while (driver.findElements(By.xpath("//android.widget.TextView[@text='NEWLY ADDED']")).size() == 0 && count < 7){
+
+            tA.press(PointOption.point(540, 640)).moveTo(PointOption.point(540, 600)).release().perform();
+            count++;
+        }
+
+        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.Button[@text='VIEW ALL']")));
+        //AndroidElement viewAllBtnForComics = (AndroidElement) driver.findElements(By.xpath("//android.widget.Button[@text='VIEW ALL']")).get(0);
+        //viewAllBtnForComics.click();
+
+
+        AndroidElement firstEBook = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_image")).get(0);
+        firstEBook.click();
+
+        ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
+        driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
+
+        AndroidElement titleEBook = (AndroidElement) driver.findElement(By.id("com.ocd:id/activity_media_info_title"));
+        ebookHold = titleEBook.getText();
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.TextView[@text='DESCRIPTION']")));
+
+        if (driver.findElements(By.xpath("//android.widget.TextView[@text='REMOVE HOLD']")).size() != 0) {
+            driver.findElement(By.xpath("//android.widget.TextView[@text='REMOVE HOLD']")).click();
+            wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.TextView[@text='HOLD']")));
+        }
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.TextView[@text='HOLD']")));
+        AndroidElement hold = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='HOLD']"));
+        hold.click();
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.TextView[@text='REMOVE HOLD']")));
+
+    }
+
+    @Test
+    public void Test_22_eBook_ReturnHold() throws InterruptedException {
+        WebDriverWait wait = new WebDriverWait(driver, 20);
+
+        goToHoldPage();
+
+        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.Button[@text='VIEW ALL']")));
+        //AndroidElement viewAllBtnForComics = (AndroidElement) driver.findElements(By.xpath("//android.widget.Button[@text='VIEW ALL']")).get(0);
+        //viewAllBtnForComics.click();
+
+        ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
+        driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
+
+
+        ebookHold = ebookHold.toUpperCase();
+        if(driver.findElements(By.xpath("//android.widget.TextView[@text='"+ebookHold+"']")).size() == 0) {
+            TouchAction tA = new TouchAction(driver);
+            int count = 0;
+            while (driver.findElements(By.xpath("//android.widget.TextView[@text='" + ebookHold + "']")).size() == 0 && count < 7) {
+
+                tA.press(PointOption.point(540, 640)).moveTo(PointOption.point(540, 600)).release().perform();
+                count++;
+            }
+        }
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("com.ocd:id/row_media_x")));
+
+        AndroidElement firstXBtn = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_x")).get(0);
+        firstXBtn.click();
+
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//android.widget.TextView[@text='"+ebookHold+"']")));
+
+        //Thread.sleep(3000);
+        //List returnedAudioWishlist =  driver.findElements(By.xpath("//android.widget.TextView[@text='"+audiobookTitlewishlist+"']"));
         //Assert.assertEquals(returnedAudioWishlist.size(), 0);
     }
 
