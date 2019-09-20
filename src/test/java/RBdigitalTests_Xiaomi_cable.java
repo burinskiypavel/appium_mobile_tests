@@ -128,7 +128,8 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
             driver.findElement(By.xpath("//android.widget.TextView[@text='RETURN']")).click();
             driver.findElement(By.xpath("//android.widget.Button[@text='YES']")).click();
             wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/activity_media_info_play")));
-        }
+             wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//android.widget.TextView[@text='READ']")));
+         }
 
         AndroidElement checkoutBtn = (AndroidElement) driver.findElement(By.id("com.ocd:id/activity_media_info_play"));
         checkoutBtn.click();
@@ -231,6 +232,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
             driver.findElement(By.xpath("//android.widget.TextView[@text='RETURN']")).click();
             driver.findElement(By.xpath("//android.widget.Button[@text='YES']")).click();
             wait.until(ExpectedConditions.elementToBeClickable(By.id("com.ocd:id/activity_media_info_play")));
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//android.widget.TextView[@text='READ']")));
         }
 
         pressCheckout();

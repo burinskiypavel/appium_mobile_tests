@@ -100,7 +100,7 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
 
     @Test
     public void Test_02_RbdigitalMagazineCheckout(){
-        WebDriverWait wait = new WebDriverWait(driver, 30);
+        WebDriverWait wait = new WebDriverWait(driver, 35);
 
         goToMagazinePage();
 
@@ -112,7 +112,7 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/filter_label")));
 
         //AndroidElement mag = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='US WEEKLY']"));
-        AndroidElement firstMag = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_container")).get(0);
+        AndroidElement firstMag = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_container")).get(1);
         firstMag.click();
 
         String actualMagDescription = driver.findElement(By.id("com.ocd:id/activity_media_info_description")).getText();
@@ -121,9 +121,11 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
             driver.findElement(By.xpath("//android.widget.TextView[@text='RETURN']")).click();
             driver.findElement(By.xpath("//android.widget.Button[@text='YES']")).click();
             wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/activity_media_info_play")));
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//android.widget.TextView[@text='READ']")));
         }
 
-        pressCheckout();
+        AndroidElement checkoutBtn = (AndroidElement) driver.findElement(By.id("com.ocd:id/activity_media_info_play"));
+        checkoutBtn.click();
 
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/confirmation_checkbox")));
         AndroidElement confirmationCheckbox = (AndroidElement) driver.findElement(By.id("com.ocd:id/confirmation_checkbox"));
@@ -134,34 +136,27 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
 
         Assert.assertTrue(driver.findElement(By.id("com.ocd:id/activity_media_info_play")).isDisplayed());
         Assert.assertTrue(driver.findElement(By.id("com.ocd:id/activity_media_info_left_button")).isDisplayed());
-        Assert.assertEquals(actualMagDescription, "The Economist is a global weekly magazine written for those who share an uncommon interest in being well and broadly informed. Each issue explores domestic and international issues, business, finance, current affairs, science, technology and the arts.");
+        //Assert.assertEquals(actualMagDescription, "The Economist is a global weekly magazine written for those who share an uncommon interest in being well and broadly informed. Each issue explores domestic and international issues, business, finance, current affairs, science, technology and the arts.");
     }
 
     @Test
     public void Test_03_RbdigitalMagazineReturn() throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, 30);
 
-        //wait.until(ExpectedConditions.elementToBeClickable(By.id("com.ocd:id/top_icon_menu")));
-        //driver.findElementById("com.ocd:id/top_icon_menu").click();
-
-        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='CHECKED OUT']")));
-        //AndroidElement checkedOUTTabMenu = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='CHECKED OUT']"));
-        //checkedOUTTabMenu.click();
-
-        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='CHECKED OUT']")));
         goToCheckedOutPage();
 
         TouchAction tA = new TouchAction(driver);
 
         int count = 0;
-        while (driver.findElements(By.xpath("//android.widget.TextView[@text='THE ECONOMIST']")).size() == 0 && count < 7){
+        while (driver.findElements(By.xpath("//android.widget.TextView[@text='7 JOURS']")).size() == 0 && count < 7){
 
             tA.press(PointOption.point(540, 640)).moveTo(PointOption.point(540, 600)).release().perform();
             count++;
+
         }
 
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='THE ECONOMIST']")));
-        String EconomistMagBeforeReturn = driver.findElement(By.xpath("//android.widget.TextView[@text='THE ECONOMIST']")).getText();
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='7 JOURS']")));
+        String EconomistMagBeforeReturn = driver.findElement(By.xpath("//android.widget.TextView[@text='7 JOURS']")).getText();
 
 
         //AndroidElement com = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='THE ECONOMIST']"));
@@ -190,18 +185,13 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
 
 
         List btnAfterCheckout = driver.findElements(By.xpath("//android.widget.TextView[@text='RETURN']"));
-        Assert.assertEquals(EconomistMagBeforeReturn, "THE ECONOMIST");
+        Assert.assertEquals(EconomistMagBeforeReturn, "7 JOURS");
         Assert.assertEquals(btnAfterCheckout.size(), 0);
     }
 
-
-
     @Test
     public void Test_04_RbdigitalComicCheckout(){
-        WebDriverWait wait = new WebDriverWait(driver, 30);
-
-        //AndroidElement iconMenu = (AndroidElement) driver.findElement(By.id("com.ocd:id/top_icon_menu"));
-        //iconMenu.click();
+        WebDriverWait wait = new WebDriverWait(driver, 45);
 
         goToComicsPage();
 
@@ -234,7 +224,8 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
         if(driver.findElements(By.xpath("//android.widget.TextView[@text='READ']")).size() != 0){
             driver.findElement(By.xpath("//android.widget.TextView[@text='RETURN']")).click();
             driver.findElement(By.xpath("//android.widget.Button[@text='YES']")).click();
-            wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/activity_media_info_play")));
+            wait.until(ExpectedConditions.elementToBeClickable(By.id("com.ocd:id/activity_media_info_play")));
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//android.widget.TextView[@text='READ']")));
         }
 
         pressCheckout();
@@ -256,13 +247,6 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
     public void Test_05_RbdigitalComicsReturn(){
         WebDriverWait wait = new WebDriverWait(driver, 30);
 
-        //driver.findElementById("com.ocd:id/top_icon_menu").click();
-        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='HOME']")));
-
-        //AndroidElement checkedOUTTabMenu = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='CHECKED OUT']"));
-        //checkedOUTTabMenu.click();
-
-        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='CHECKED OUT']")));
         goToCheckedOutPage();
 
         TouchAction tA = new TouchAction(driver);
