@@ -328,6 +328,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
             driver.findElement(By.xpath("//android.widget.TextView[@text='RETURN']")).click();
             driver.findElement(By.xpath("//android.widget.Button[@text='YES']")).click();
             wait.until(ExpectedConditions.elementToBeClickable(By.id("com.ocd:id/activity_media_info_play")));
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//android.widget.TextView[@text='PLAY']")));
         }
 
         pressCheckout();
@@ -914,7 +915,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
 
     @Test
     public void Test_16_AudioBook_ReturnWishlist() throws InterruptedException {
-        WebDriverWait wait = new WebDriverWait(driver, 30);
+        WebDriverWait wait = new WebDriverWait(driver, 45);
 
         goToWishlistPage();
 
@@ -1051,6 +1052,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         if (driver.findElements(By.xpath("//android.widget.TextView[@text='REMOVE HOLD']")).size() != 0) {
             driver.findElement(By.xpath("//android.widget.TextView[@text='REMOVE HOLD']")).click();
             wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.TextView[@text='HOLD']")));
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//android.widget.TextView[@text='REMOVE HOLD']")));
         }
 
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.TextView[@text='HOLD']")));
@@ -1058,7 +1060,6 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         hold.click();
 
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.TextView[@text='HOLD']")));
-
     }
 
     @Test

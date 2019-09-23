@@ -69,7 +69,6 @@ public class RBdigitalTests_Xiaomi_cable_2 extends BaseTest {
         mainPage = new MainPage(driver);
         //baseTest = new BaseTest(driver);
         mainPage.Login("qauser", "password1");
-
     }
 
 
