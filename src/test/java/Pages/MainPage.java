@@ -31,6 +31,11 @@ public class MainPage {
         driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
         //((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
 
+        if(driver.findElements(By.id("com.ocd:id/heading")).size() != 0){
+            driver.findElement(By.id("com.ocd:id/dismiss")).click();
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("com.ocd:id/heading")));
+        }
+
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/add_profile_user")));
         AndroidElement userName = (AndroidElement) driver.findElement(By.id("com.ocd:id/add_profile_user"));
         userName.sendKeys(username);

@@ -30,6 +30,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
     MainPage mainPage;
     //BaseTest baseTest;
 
+    String actualMagTitle;
     String actualAudioBookTitle;
     String actualBookTitle;
     String audiobookTitlewishlist;
@@ -107,7 +108,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
 
     @Test
     public void Test_02_RbdigitalMagazineCheckout(){
-        WebDriverWait wait = new WebDriverWait(driver, 35);
+        WebDriverWait wait = new WebDriverWait(driver, 45);
 
         goToMagazinePage();
 
@@ -118,8 +119,10 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
 
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/filter_label")));
 
-        //AndroidElement mag = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='US WEEKLY']"));
-        AndroidElement firstMag = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_container")).get(1);
+        AndroidElement titleMag = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_title")).get(0);
+        actualMagTitle = titleMag.getText();
+
+        AndroidElement firstMag = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_container")).get(0);
         firstMag.click();
 
         String actualMagDescription = driver.findElement(By.id("com.ocd:id/activity_media_info_description")).getText();
@@ -155,15 +158,15 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         TouchAction tA = new TouchAction(driver);
 
         int count = 0;
-        while (driver.findElements(By.xpath("//android.widget.TextView[@text='7 JOURS']")).size() == 0 && count < 7){
+        while (driver.findElements(By.xpath("//android.widget.TextView[@text='"+actualMagTitle+"']")).size() == 0 && count < 7){
 
             tA.press(PointOption.point(540, 640)).moveTo(PointOption.point(540, 600)).release().perform();
             count++;
 
         }
 
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='7 JOURS']")));
-        String EconomistMagBeforeReturn = driver.findElement(By.xpath("//android.widget.TextView[@text='7 JOURS']")).getText();
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='"+actualMagTitle+"']")));
+        String EconomistMagBeforeReturn = driver.findElement(By.xpath("//android.widget.TextView[@text='"+actualMagTitle+"']")).getText();
 
 
         //AndroidElement com = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='THE ECONOMIST']"));
@@ -190,9 +193,11 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         AndroidElement firstXBtn = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_x")).get(0);
         firstXBtn.click();
 
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//android.widget.TextView[@text='"+actualMagTitle+"']")));
+
 
         List btnAfterCheckout = driver.findElements(By.xpath("//android.widget.TextView[@text='RETURN']"));
-        Assert.assertEquals(EconomistMagBeforeReturn, "7 JOURS");
+        Assert.assertEquals(EconomistMagBeforeReturn, ""+actualMagTitle+"");
         Assert.assertEquals(btnAfterCheckout.size(), 0);
     }
 
@@ -252,7 +257,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
 
     @Test
     public void Test_05_RbdigitalComicsReturn(){
-        WebDriverWait wait = new WebDriverWait(driver, 30);
+        WebDriverWait wait = new WebDriverWait(driver, 35);
 
         goToCheckedOutPage();
 
@@ -283,6 +288,9 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
 
         AndroidElement firstXBtn = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_x")).get(0);
         firstXBtn.click();
+
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//android.widget.TextView[@text='CAPTAIN MARVEL VOL. 1: IN PURSUIT OF FLIGHT - SPECIAL']")));
+
 
         List returnedComics = driver.findElements(By.xpath("//android.widget.TextView[@text='CAPTAIN MARVEL VOL. 1: IN PURSUIT OF FLIGHT - SPECIAL']"));
         Assert.assertEquals(ComicBeforeReturn, "CAPTAIN MARVEL VOL. 1: IN PURSUIT OF FLIGHT - SPECIAL");
@@ -318,10 +326,10 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         //AndroidElement mag = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='US WEEKLY']"));
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/sort_spinner_text_view")));
 
-        AndroidElement titleAudioBook = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_title")).get(2);
+        AndroidElement titleAudioBook = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_title")).get(1);
         actualAudioBookTitle = titleAudioBook.getText();
 
-        AndroidElement secondAudioBook = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_container")).get(2);
+        AndroidElement secondAudioBook = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_container")).get(1);
         secondAudioBook.click();
 
         if(driver.findElements(By.xpath("//android.widget.TextView[@text='PLAY']")).size() != 0){
@@ -402,6 +410,9 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         AndroidElement firstXBtn = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_x")).get(0);
         firstXBtn.click();
 
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//android.widget.TextView[@text='"+actualAudioBookTitle+"']")));
+
+
         List returnedComics = driver.findElements(By.xpath("//android.widget.TextView[@text='"+actualAudioBookTitle+"']"));
         //Assert.assertEquals(ComicBeforeReturn, "THE PASTOR'S KID");
         Assert.assertEquals(returnedComics.size(), 0);
@@ -436,10 +447,10 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/sort_spinner_text_view")));
 
 
-        AndroidElement title = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_title")).get(1);
+        AndroidElement title = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_title")).get(0);
         actualBookTitle = title.getText();
 
-        AndroidElement secondEBook = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_container")).get(1);
+        AndroidElement secondEBook = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_container")).get(0);
         secondEBook.click();
 
         if(driver.findElements(By.xpath("//android.widget.TextView[@text='READ']")).size() != 0){
