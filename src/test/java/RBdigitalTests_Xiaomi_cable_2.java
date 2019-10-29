@@ -138,6 +138,8 @@ public class RBdigitalTests_Xiaomi_cable_2 extends BaseTest {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
         driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
 
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("com.ocd:id/row_media_x")));
+
         TouchAction touchAction = new TouchAction(driver);
         touchAction.press(PointOption.point(540, 500)).moveTo(PointOption.point(540, 800)).release().perform();
 
