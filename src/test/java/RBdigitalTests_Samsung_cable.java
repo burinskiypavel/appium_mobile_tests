@@ -186,6 +186,7 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
         AndroidElement firstXBtn = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_x")).get(0);
         firstXBtn.click();
 
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("android:id/progress")));
 
         List btnAfterCheckout = driver.findElements(By.xpath("//android.widget.TextView[@text='RETURN']"));
         Assert.assertEquals(EconomistMagBeforeReturn, "7 JOURS");
@@ -279,6 +280,8 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
 
         AndroidElement firstXBtn = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_x")).get(0);
         firstXBtn.click();
+
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("android:id/progress")));
 
         List returnedComics = driver.findElements(By.xpath("//android.widget.TextView[@text='CAPTAIN MARVEL VOL. 1: IN PURSUIT OF FLIGHT - SPECIAL']"));
         Assert.assertEquals(ComicBeforeReturn, "CAPTAIN MARVEL VOL. 1: IN PURSUIT OF FLIGHT - SPECIAL");
@@ -426,6 +429,9 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
 
         AndroidElement firstXBtn = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_x")).get(1);
         firstXBtn.click();
+
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("android:id/progress")));
+
 
         List returnedComics = driver.findElements(By.xpath("//android.widget.TextView[@text='"+actualAudioBookTitle+"']"));
         //Assert.assertEquals(ComicBeforeReturn, "THE PASTOR'S KID");
@@ -575,6 +581,8 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
 
         AndroidElement firstXBtn = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_x")).get(0);
         firstXBtn.click();
+
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("android:id/progress")));
 
         List returnedComics = driver.findElements(By.xpath("//android.widget.TextView[@text='"+actualBookTitle+"']"));
         //Assert.assertEquals(ComicBeforeReturn, "THE LAW OF FUNDRAISING");
