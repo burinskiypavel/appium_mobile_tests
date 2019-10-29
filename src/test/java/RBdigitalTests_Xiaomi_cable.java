@@ -108,7 +108,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
 
     @Test
     public void Test_02_RbdigitalMagazineCheckout(){
-        WebDriverWait wait = new WebDriverWait(driver, 45);
+        WebDriverWait wait = new WebDriverWait(driver, 49);
 
         goToMagazinePage();
 
@@ -193,6 +193,9 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         AndroidElement firstXBtn = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_x")).get(0);
         firstXBtn.click();
 
+        //Thread.sleep(1300);
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("android:id/progress")));
+
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//android.widget.TextView[@text='"+actualMagTitle+"']")));
 
 
@@ -256,7 +259,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
     }
 
     @Test
-    public void Test_05_RbdigitalComicsReturn(){
+    public void Test_05_RbdigitalComicsReturn() throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, 35);
 
         goToCheckedOutPage();
@@ -288,6 +291,12 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
 
         AndroidElement firstXBtn = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_x")).get(0);
         firstXBtn.click();
+
+        //Thread.sleep(1300);
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("android:id/progress")));
+        //wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//android.widget.TextView[@text='Returning title']")));
+
+
 
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//android.widget.TextView[@text='CAPTAIN MARVEL VOL. 1: IN PURSUIT OF FLIGHT - SPECIAL']")));
 
@@ -357,7 +366,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
     }
 
     @Test
-    public void Test_07_RbdigitalAudiobookReturn(){
+    public void Test_07_RbdigitalAudiobookReturn() throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, 30);
 
         //driver.findElementById("com.ocd:id/top_icon_menu").click();
@@ -409,6 +418,8 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
 
         AndroidElement firstXBtn = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_x")).get(0);
         firstXBtn.click();
+        //Thread.sleep(1200);
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("android:id/progress")));
 
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//android.widget.TextView[@text='"+actualAudioBookTitle+"']")));
 
@@ -525,6 +536,9 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
 
         AndroidElement firstXBtn = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_x")).get(0);
         firstXBtn.click();
+        //Thread.sleep(1400);
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("android:id/progress")));
+
 
         List returnedComics = driver.findElements(By.xpath("//android.widget.TextView[@text='"+actualBookTitle+"']"));
         //Assert.assertEquals(ComicBeforeReturn, "THE LAW OF FUNDRAISING");
