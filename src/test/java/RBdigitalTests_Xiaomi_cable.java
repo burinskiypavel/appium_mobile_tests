@@ -190,6 +190,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
         //((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.MENU);
 
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/row_media_x")));
         AndroidElement firstXBtn = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_x")).get(0);
         firstXBtn.click();
 
@@ -284,11 +285,14 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         AndroidElement viewAllBtnForComics = (AndroidElement) driver.findElements(By.xpath("//android.widget.Button[@text='VIEW ALL']")).get(0);
         viewAllBtnForComics.click();
 
+        Thread.sleep(500);
+
         ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
         driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
         //((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.MENU);
 
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("com.ocd:id/row_media_x")));
         AndroidElement firstXBtn = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_x")).get(0);
         firstXBtn.click();
 
@@ -335,10 +339,10 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         //AndroidElement mag = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='US WEEKLY']"));
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/sort_spinner_text_view")));
 
-        AndroidElement titleAudioBook = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_title")).get(1);
+        AndroidElement titleAudioBook = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_title")).get(0);
         actualAudioBookTitle = titleAudioBook.getText();
 
-        AndroidElement secondAudioBook = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_container")).get(1);
+        AndroidElement secondAudioBook = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_container")).get(0);
         secondAudioBook.click();
 
         if(driver.findElements(By.xpath("//android.widget.TextView[@text='PLAY']")).size() != 0){
@@ -406,7 +410,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         }
 
 
-        String ComicBeforeReturn = driver.findElement(By.xpath("//android.widget.TextView[@text='"+actualAudioBookTitle+"']")).getText();
+        //String ComicBeforeReturn = driver.findElement(By.xpath("//android.widget.TextView[@text='"+actualAudioBookTitle+"']")).getText();
 
 
         //((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
@@ -765,10 +769,10 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='EBOOKS']")));
 
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/sort_spinner_text_view")));
-        AndroidElement firstBookFromSearch = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_container")).get(1);
+        AndroidElement firstBookFromSearch = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_container")).get(0);
         firstBookFromSearch.click();
 
-        String actualBookDescription = driver.findElement(By.id("com.ocd:id/activity_media_info_description")).getText();
+        //String actualBookDescription = driver.findElement(By.id("com.ocd:id/activity_media_info_description")).getText();
 
         pressCheckout();
 
@@ -956,6 +960,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
 
         AndroidElement firstXBtn = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_x")).get(0);
         firstXBtn.click();
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("android:id/progress")));
 
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//android.widget.TextView[@text='"+audiobookTitlewishlist+"']")));
 

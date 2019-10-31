@@ -57,7 +57,7 @@ public class RBdigitalTests_PixelC_WiFi {
         DesiredCapabilities cap = new DesiredCapabilities();
         cap.setCapability("deviceName", "Pixel C");
         //cap.setCapability("udid", "6118001501");
-        cap.setCapability("udid", "10.3.21.165:5555");//6118001501
+        cap.setCapability("udid", "6118001501");// 10.3.21.165:5555
         cap.setCapability("platformName", "Android");
         cap.setCapability("platformVersion", "8.1.0.");
         cap.setCapability("appPackage", "com.ocd");
