@@ -117,11 +117,6 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         thenIShouldNotSeeReturnBtn();
     }
 
-    public void thenIShouldNotSeeReturnBtn() {
-        List btnAfterCheckout = driver.findElements(By.xpath("//android.widget.TextView[@text='RETURN']"));
-        Assert.assertEquals(btnAfterCheckout.size(), 0);
-    }
-
     @Test(enabled = false)
     public void Test_03_MagazineReturn() throws InterruptedException {
         //WebDriverWait wait1 = new WebDriverWait(driver, 30);

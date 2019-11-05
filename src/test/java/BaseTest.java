@@ -16,6 +16,7 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 
 import java.time.Duration;
+import java.util.List;
 
 public class BaseTest {
     //public WebDriver driver;
@@ -300,6 +301,11 @@ public class BaseTest {
 
     public void thenIShouldSeeReadBtn() {
         Assert.assertTrue(driver.findElement(By.id("com.ocd:id/activity_media_info_play")).isDisplayed());
+    }
+
+    public void thenIShouldNotSeeReturnBtn() {
+        List btnAfterCheckout = driver.findElements(By.xpath("//android.widget.TextView[@text='RETURN']"));
+        Assert.assertEquals(btnAfterCheckout.size(), 0);
     }
 
     /*
