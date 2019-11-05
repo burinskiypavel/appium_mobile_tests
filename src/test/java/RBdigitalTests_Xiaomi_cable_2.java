@@ -106,8 +106,7 @@ public class RBdigitalTests_Xiaomi_cable_2 extends BaseTest {
         AndroidElement titleAudioBook = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_title")).get(0);
         audiobookHold = titleAudioBook.getText();
 
-        AndroidElement firstAudioBook = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_container")).get(0);
-        firstAudioBook.click();
+        openElement(0);
 
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.TextView[@text='DESCRIPTION']")));
 

@@ -115,8 +115,7 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/filter_label")));
 
         //AndroidElement mag = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='US WEEKLY']"));
-        AndroidElement firstMag = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_container")).get(1);
-        firstMag.click();
+        openElement(1);
 
         String actualMagDescription = driver.findElement(By.id("com.ocd:id/activity_media_info_description")).getText();
 
@@ -137,8 +136,8 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
         AndroidElement okButton = (AndroidElement) driver.findElement(By.id("com.ocd:id/dialog_ok_button"));
         okButton.click();
 
-        Assert.assertTrue(driver.findElement(By.id("com.ocd:id/activity_media_info_play")).isDisplayed());
-        Assert.assertTrue(driver.findElement(By.id("com.ocd:id/activity_media_info_left_button")).isDisplayed());
+        thenIShouldSeeReadBtn();
+        thenIShouldSeeReturnBtn();
         //Assert.assertEquals(actualMagDescription, "The Economist is a global weekly magazine written for those who share an uncommon interest in being well and broadly informed. Each issue explores domestic and international issues, business, finance, current affairs, science, technology and the arts.");
     }
 
@@ -220,8 +219,7 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
 
         //AndroidElement mag = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='US WEEKLY']"));
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='CAPTAIN MARVEL VOL. 1: IN PURSUIT OF FLIGHT - SPECIAL']")));
-        AndroidElement firsComfrom2page = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_container")).get(0);
-        firsComfrom2page.click();
+        openElement(0);
 
         String actualComDescription = driver.findElement(By.id("com.ocd:id/activity_media_info_description")).getText();
 
@@ -242,8 +240,8 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
         AndroidElement okButton = (AndroidElement) driver.findElement(By.id("com.ocd:id/dialog_ok_button"));
         okButton.click();
 
-        Assert.assertTrue(driver.findElement(By.id("com.ocd:id/activity_media_info_play")).isDisplayed());
-        Assert.assertTrue(driver.findElement(By.id("com.ocd:id/activity_media_info_left_button")).isDisplayed());
+        thenIShouldSeeReadBtn();
+        thenIShouldSeeReturnBtn();
         Assert.assertTrue(actualComDescription.contains("Collects Captain Marvel"));
     }
 
@@ -339,8 +337,7 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
         AndroidElement titleAudioBook = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_title")).get(0);
         actualAudioBookTitle = titleAudioBook.getText();
 
-        AndroidElement secondAudioBook = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_container")).get(0);
-        secondAudioBook.click();
+        openElement(0);
 
         if(driver.findElements(By.xpath("//android.widget.TextView[@text='PLAY']")).size() != 0){
             driver.findElement(By.xpath("//android.widget.TextView[@text='RETURN']")).click();
@@ -360,8 +357,8 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
 
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/activity_media_info_play")));
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/activity_media_info_left_button")));
-        Assert.assertTrue(driver.findElement(By.id("com.ocd:id/activity_media_info_play")).isDisplayed());
-        Assert.assertTrue(driver.findElement(By.id("com.ocd:id/activity_media_info_left_button")).isDisplayed());
+        thenIShouldSeeReadBtn();
+        thenIShouldSeeReturnBtn();
         //Assert.assertTrue(actualAudioBookDescription.contains("Described as \"one of the best coming-of-age novels of the twentieth century,\" Theodore Weesner's modern American classic is now on audio! It's 1959. Sixteen-year-old Alex Housman has just stolen his fourteenth car and frankly doesn't know why. His divorced, working-class father grinds out the night shift at the local Chevy plant in Detroit and looks forward to the flask in his glove compartment and the open bottles of booze in his Flint, Michigan, home. Broke and fighting to survive, Alex and his father face the realities of estrangement, incarceration, and even violence as their lives unfold toward the climactic episode that a New York Times reviewer called \"one of the most profoundly powerful in American fiction.\" In this rich, beautifully crafted story, Weesner has written a transcendent piece of literature in deceptively simple language, painting a powerful portrait of a father and a son otherwise invisible among the mundane, everyday details of life in blue-collar America. It is a true and enduring American classic."));
     }
 
@@ -489,8 +486,7 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
         AndroidElement title = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_title")).get(1);
         actualBookTitle = title.getText();
 
-        AndroidElement secondEBook = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_container")).get(1);
-        secondEBook.click();
+        openElement(1);
 
         if(driver.findElements(By.xpath("//android.widget.TextView[@text='READ']")).size() != 0){
             driver.findElement(By.xpath("//android.widget.TextView[@text='RETURN']")).click();
@@ -510,8 +506,8 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
 
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/activity_media_info_play")));
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/activity_media_info_left_button")));
-        Assert.assertTrue(driver.findElement(By.id("com.ocd:id/activity_media_info_play")).isDisplayed());
-        Assert.assertTrue(driver.findElement(By.id("com.ocd:id/activity_media_info_left_button")).isDisplayed());
+        thenIShouldSeeReadBtn();
+        thenIShouldSeeReturnBtn();
         //Assert.assertTrue(actualAudioBookDescription.contains("Raising funds to fulfill a nonprofit organization's goals is critical to its success"));
     }
 
@@ -618,8 +614,7 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='MAGAZINES']")));
 
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/sort_spinner_text_view")));
-        AndroidElement firstMagFromSearch = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_container")).get(0);
-        firstMagFromSearch.click();
+        openElement(0);
 
         String actualMagDescription = driver.findElement(By.id("com.ocd:id/activity_media_info_description")).getText();
 
@@ -684,8 +679,7 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='COMICS']")));
 
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/sort_spinner_text_view")));
-        AndroidElement firstComFromSearch = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_container")).get(0);
-        firstComFromSearch.click();
+        openElement(0);
 
         String actualComDescription = driver.findElement(By.id("com.ocd:id/activity_media_info_description")).getText();
 
@@ -750,8 +744,7 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='AUDIOBOOKS']")));
 
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/sort_spinner_text_view")));
-        AndroidElement firstAudiobookFromSearch = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_container")).get(0);
-        firstAudiobookFromSearch.click();
+        openElement(0);
 
         String actualAudiobookDescription = driver.findElement(By.id("com.ocd:id/activity_media_info_description")).getText();
 
@@ -810,8 +803,7 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='EBOOKS']")));
 
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/sort_spinner_text_view")));
-        AndroidElement firstBookFromSearch = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_container")).get(0);
-        firstBookFromSearch.click();
+        openElement(0);
 
         String actualBookDescription = driver.findElement(By.id("com.ocd:id/activity_media_info_description")).getText();
 
@@ -967,8 +959,7 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
         AndroidElement titleAudioBook = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_title")).get(1);
         audiobookTitlewishlist = titleAudioBook.getText();
 
-        AndroidElement secondAudioBook = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_container")).get(1);
-        secondAudioBook.click();
+        openElement(1);
 
         //if (driver.findElements(By.xpath("//android.widget.TextView[@text='PLAY']")).size() != 0) {
         //    driver.findElement(By.xpath("//android.widget.TextView[@text='RETURN']")).click();
@@ -1033,8 +1024,7 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
         AndroidElement title = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_title")).get(2);
         bookTitlewishlist = title.getText();
 
-        AndroidElement secondEBook = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_container")).get(2);
-        secondEBook.click();
+        openElement(2);
 
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.TextView[@text='ADD TO WISHLIST']")));
         AndroidElement addToWishlist = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='ADD TO WISHLIST']"));
@@ -1114,8 +1104,7 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
         AndroidElement titleAudioBook = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_title")).get(0);
         audiobookHold = titleAudioBook.getText();
 
-        AndroidElement firstAudioBook = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_container")).get(0);
-        firstAudioBook.click();
+        openElement(0);
 
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.TextView[@text='DESCRIPTION']")));
 

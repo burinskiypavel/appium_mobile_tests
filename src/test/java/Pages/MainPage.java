@@ -51,20 +51,29 @@ public class MainPage {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
         driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
 
+        for(int i = 0; i < 4; i++) {
+            if (driver.findElements(By.id("com.ocd:id/heading")).size() != 0) {
+                driver.findElement(By.id("com.ocd:id/dismiss")).click();
+                //wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("com.ocd:id/heading")));
 
-        if(driver.findElements(By.id("com.ocd:id/heading")).size() != 0){
-            driver.findElement(By.id("com.ocd:id/dismiss")).click();
-            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("com.ocd:id/heading")));
+                ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
+                wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
+                driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
+            }
         }
 
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//*[@class='android.widget.TextView'][@text='Select your library']")));
         TouchAction tA = new TouchAction((PerformsTouchActions) driver);
         tA.press(PointOption.point(540, 1420)).moveTo(PointOption.point(540, 355)).release().perform();
 
-
-        if(driver.findElements(By.id("com.ocd:id/heading")).size() != 0){
-            driver.findElement(By.id("com.ocd:id/dismiss")).click();
-            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("com.ocd:id/heading")));
+        for(int i = 0; i < 4; i++) {
+            if (driver.findElements(By.id("com.ocd:id/heading")).size() != 0) {
+                driver.findElement(By.id("com.ocd:id/dismiss")).click();
+                //wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("com.ocd:id/heading")));
+                ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
+                wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
+                driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
+            }
         }
 
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//*[@class='android.widget.TextView'][@text='RBdigital Library']")));
