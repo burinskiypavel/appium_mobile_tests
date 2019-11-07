@@ -1,3 +1,4 @@
+import Steps.PixelCSteps;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.PerformsTouchActions;
@@ -22,16 +23,18 @@ public class BaseTest {
     //public WebDriver driver;
     AppiumDriver driver;
     WebDriverWait wait;
+    PixelCSteps pixelCSteps;
 
     //private WebDriver webDriver;
     //public BaseTest(WebDriver driver2001) {
     //    this.driver = driver2001;
     //}
 
+
     @AfterClass
     void afterClass() {
-        //driver.quit();
-        driver.close();
+        driver.quit();
+        //driver.close();
     }
 
     public void goToComicsPage() {
@@ -157,10 +160,11 @@ public class BaseTest {
     }
 
     public void pressCheckout() {
-        WebDriverWait wait = new WebDriverWait(driver, 30);
+        WebDriverWait wait = new WebDriverWait(driver, 45);
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/activity_media_info_play")));
         AndroidElement checkoutBtn = (AndroidElement) driver.findElement(By.id("com.ocd:id/activity_media_info_play"));
         checkoutBtn.click();
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/activity_media_info_left_button")));
     }
 
     public void openElement(int number) {
@@ -271,7 +275,7 @@ public class BaseTest {
         AndroidElement viewAllBtnForComics = (AndroidElement) driver.findElements(By.xpath("//android.widget.Button[@text='VIEW ALL']")).get(0);
         viewAllBtnForComics.click();
 
-        Thread.sleep(500);
+        Thread.sleep(1000);
 
         ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
@@ -292,7 +296,6 @@ public class BaseTest {
         driver.findElement(By.xpath("//android.widget.Button[@text='YES']")).click();
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/activity_media_info_play")));
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//android.widget.TextView[@text='READ']")));
-
     }
 
     public void thenIShouldSeeReturnBtn() {

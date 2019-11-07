@@ -469,6 +469,5 @@ public class RBdigitalTests_PixelC_WiFi {
         int startPoint = (int) (size.getHeight() * startPercentage);
         int endPoint = (int) (size.getHeight() * finalPercentage);
         new TouchAction(driver).press(PointOption.point(width, startPoint)).waitAction(WaitOptions.waitOptions(Duration.ofMillis(duration))).moveTo(PointOption.point(width, endPoint)).release().perform();
-
     }
 }

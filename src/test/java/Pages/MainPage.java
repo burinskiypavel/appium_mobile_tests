@@ -86,10 +86,10 @@ public class MainPage {
         AndroidElement passwordSubmit = (AndroidElement) driver.findElement(By.id("com.ocd:id/add_profile_password_submit"));
         passwordSubmit.click();
 
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.android.packageinstaller:id/permission_deny_button")));
         AndroidElement AllowRBdigitalAccesstoFilesOnYourDevice = (AndroidElement) driver.findElement(By.id("com.android.packageinstaller:id/permission_deny_button"));
         AllowRBdigitalAccesstoFilesOnYourDevice.click();
 
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//*[@class='android.widget.TextView'][@text='AUDIOBOOKS']")));
-
     }
 }
