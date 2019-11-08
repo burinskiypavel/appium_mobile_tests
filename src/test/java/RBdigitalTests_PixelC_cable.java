@@ -186,10 +186,10 @@ public class RBdigitalTests_PixelC_cable extends BaseTest {
         //AndroidElement mag = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='US WEEKLY']"));
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/sort_spinner_text_view")));
 
-        AndroidElement titleAudioBook = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_title")).get(1);
+        AndroidElement titleAudioBook = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_title")).get(0);
         actualAudioBookTitle = titleAudioBook.getText();
 
-        openElement(1);
+        openElement(0);
 
         if(driver.findElements(By.xpath("//android.widget.TextView[@text='PLAY']")).size() != 0){
             driver.findElement(By.xpath("//android.widget.TextView[@text='RETURN']")).click();
@@ -308,10 +308,10 @@ public class RBdigitalTests_PixelC_cable extends BaseTest {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/sort_spinner_text_view")));
 
 
-        AndroidElement title = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_title")).get(1);
+        AndroidElement title = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_title")).get(0);
         actualBookTitle = title.getText();
 
-        openElement(1);
+        openElement(0);
 
         if(driver.findElements(By.xpath("//android.widget.TextView[@text='READ']")).size() != 0){
             driver.findElement(By.xpath("//android.widget.TextView[@text='RETURN']")).click();
@@ -422,9 +422,9 @@ public class RBdigitalTests_PixelC_cable extends BaseTest {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='MAGAZINES']")));
 
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/sort_spinner_text_view")));
-        openElement(0);
+        openElement(1);
 
-        String actualMagDescription = driver.findElement(By.id("com.ocd:id/activity_media_info_description")).getText();
+        //String actualMagDescription = driver.findElement(By.id("com.ocd:id/activity_media_info_description")).getText();
 
 
         if(driver.findElements(By.xpath("//android.widget.TextView[@text='READ']")).size() != 0){
@@ -456,7 +456,7 @@ public class RBdigitalTests_PixelC_cable extends BaseTest {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='CHECKOUT']")));
 
         Assert.assertTrue(driver.findElement(By.xpath("//android.widget.TextView[@text='CHECKOUT']")).isDisplayed());
-        Assert.assertTrue(actualMagDescription.contains("Prevention magazine gives you healthy solutions you can really live with."));
+        //Assert.assertTrue(actualMagDescription.contains("Prevention magazine gives you healthy solutions you can really live with."));
     }
 
     @Test

@@ -1,3 +1,4 @@
+import Steps.CheckoutsSteps;
 import Steps.PixelCSteps;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
@@ -24,6 +25,7 @@ public class BaseTest {
     AppiumDriver driver;
     WebDriverWait wait;
     PixelCSteps pixelCSteps;
+    CheckoutsSteps checkoutsSteps;
 
     //private WebDriver webDriver;
     //public BaseTest(WebDriver driver2001) {
@@ -138,6 +140,17 @@ public class BaseTest {
         driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
 
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='AUDIOBOOKS']")));
+
+        AndroidElement viewAllBtn = (AndroidElement) driver.findElement(By.id("com.ocd:id/titles_header_view_all"));
+        viewAllBtn.click();
+
+        ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
+        driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/pagination_two")));
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/filter_label")));
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/sort_spinner_text_view")));
     }
 
     public void goToEBookPage() {
@@ -161,9 +174,19 @@ public class BaseTest {
 
     public void pressCheckout() {
         WebDriverWait wait = new WebDriverWait(driver, 45);
+
+        if(driver.findElements(By.xpath("//android.widget.TextView[@text='PLAY']")).size() != 0){
+            driver.findElement(By.xpath("//android.widget.TextView[@text='RETURN']")).click();
+            driver.findElement(By.xpath("//android.widget.Button[@text='YES']")).click();
+            wait.until(ExpectedConditions.elementToBeClickable(By.id("com.ocd:id/activity_media_info_play")));
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//android.widget.TextView[@text='PLAY']")));
+        }
+
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/activity_media_info_play")));
         AndroidElement checkoutBtn = (AndroidElement) driver.findElement(By.id("com.ocd:id/activity_media_info_play"));
         checkoutBtn.click();
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/activity_media_info_play")));
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/activity_media_info_left_button")));
     }
 
@@ -310,6 +333,17 @@ public class BaseTest {
         List btnAfterCheckout = driver.findElements(By.xpath("//android.widget.TextView[@text='RETURN']"));
         Assert.assertEquals(btnAfterCheckout.size(), 0);
     }
+
+    public void openCheckedOutEAudioPage(){
+        WebDriverWait wait = new WebDriverWait(driver, 45);
+        TouchAction touchAction = new TouchAction(driver);
+        touchAction.press(PointOption.point(540, 500)).moveTo(PointOption.point(540, 800)).release().perform();
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.Button[@text='VIEW ALL']")));
+        AndroidElement viewAllBtnForComics = (AndroidElement) driver.findElements(By.xpath("//android.widget.Button[@text='VIEW ALL']")).get(0);
+        viewAllBtnForComics.click();
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/filter_label")));
+    }
+
 
     /*
     public void swipeVertical_(AppiumDriver<MobileElement> driver, double startPercentage, double finalPercentage, int duration){

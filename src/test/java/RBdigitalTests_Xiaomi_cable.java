@@ -152,126 +152,48 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         Assert.assertEquals(returnedComics.size(), 0);
     }
 
-
     @Test
-    public void Test_06_AudiobookCheckout(){
-        WebDriverWait wait = new WebDriverWait(driver, 40);
-
+    public void Test_06_AudiobookCheckout_Return(){
         goToAudiobookPage();
-
-        AndroidElement viewAllBtn = (AndroidElement) driver.findElement(By.id("com.ocd:id/titles_header_view_all"));
-        viewAllBtn.click();
-
-        ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
-        driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
-
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/pagination_two")));
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/filter_label")));
-
-        //TouchAction tB = new TouchAction(driver);
-
-        //int count = 0;
-        //while (driver.findElements(By.xpath("//android.widget.TextView[@text='X-MEN: DAYS OF FUTURE PAST - SPECIAL']")).size() == 0 && count < 10){
-
-        //    tB.press(PointOption.point(540, 640)).moveTo(PointOption.point(540, 600)).release().perform();
-
-        //}
-
-        //AndroidElement mag = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='US WEEKLY']"));
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/sort_spinner_text_view")));
-
-        AndroidElement titleAudioBook = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_title")).get(1);
-        actualAudioBookTitle = titleAudioBook.getText();
-
-        openElement(1);
-
-        if(driver.findElements(By.xpath("//android.widget.TextView[@text='PLAY']")).size() != 0){
-            driver.findElement(By.xpath("//android.widget.TextView[@text='RETURN']")).click();
-            driver.findElement(By.xpath("//android.widget.Button[@text='YES']")).click();
-            wait.until(ExpectedConditions.elementToBeClickable(By.id("com.ocd:id/activity_media_info_play")));
-            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//android.widget.TextView[@text='PLAY']")));
-        }
-
+        actualAudioBookTitle = getTitleOfElement(2);
+        openElement(2);
         pressCheckout();
-
-        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/confirmation_checkbox")));
-        //AndroidElement confirmationCheckbox = (AndroidElement) driver.findElement(By.id("com.ocd:id/confirmation_checkbox"));
-        //confirmationCheckbox.click();
-
-        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/dialog_ok_button")));
-        //AndroidElement okButton = (AndroidElement) driver.findElement(By.id("com.ocd:id/dialog_ok_button"));
-        //okButton.click();
-
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/activity_media_info_play")));
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/activity_media_info_left_button")));
         thenIShouldSeeReadBtn();
         thenIShouldSeeReturnBtn();
         //Assert.assertTrue(actualAudioBookDescription.contains("Described as \"one of the best coming-of-age novels of the twentieth century,\" Theodore Weesner's modern American classic is now on audio! It's 1959. Sixteen-year-old Alex Housman has just stolen his fourteenth car and frankly doesn't know why. His divorced, working-class father grinds out the night shift at the local Chevy plant in Detroit and looks forward to the flask in his glove compartment and the open bottles of booze in his Flint, Michigan, home. Broke and fighting to survive, Alex and his father face the realities of estrangement, incarceration, and even violence as their lives unfold toward the climactic episode that a New York Times reviewer called \"one of the most profoundly powerful in American fiction.\" In this rich, beautifully crafted story, Weesner has written a transcendent piece of literature in deceptively simple language, painting a powerful portrait of a father and a son otherwise invisible among the mundane, everyday details of life in blue-collar America. It is a true and enduring American classic."));
+        goToCheckedOutPage();
+        openCheckedOutEAudioPage();
+        returnAudiobook(actualAudioBookTitle);
+        List returnedComics = driver.findElements(By.xpath("//android.widget.TextView[@text='"+actualAudioBookTitle+"']"));
+        //Assert.assertEquals(ComicBeforeReturn, "THE PASTOR'S KID");
+        Assert.assertEquals(returnedComics.size(), 0);
     }
 
-    @Test
+    @Test(enabled = false)
     public void Test_07_AudiobookReturn() throws InterruptedException {
-        WebDriverWait wait = new WebDriverWait(driver, 30);
-
-        //driver.findElementById("com.ocd:id/top_icon_menu").click();
-        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='HOME']")));
-
-        //AndroidElement checkedOUTTabMenu = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='CHECKED OUT']"));
-        //checkedOUTTabMenu.click();
-
-        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='CHECKED OUT']")));
-
+        //WebDriverWait wait = new WebDriverWait(driver, 30);
         goToCheckedOutPage();
+        openCheckedOutEAudioPage();
+        returnAudiobook(actualAudioBookTitle);
+        List returnedComics = driver.findElements(By.xpath("//android.widget.TextView[@text='"+actualAudioBookTitle+"']"));
+        //Assert.assertEquals(ComicBeforeReturn, "THE PASTOR'S KID");
+        Assert.assertEquals(returnedComics.size(), 0);
+    }
 
-
+    public void returnAudiobook(String actualAudioBookTitle) {
+        WebDriverWait wait = new WebDriverWait(driver, 30);
         TouchAction touchAction = new TouchAction(driver);
-        touchAction.press(PointOption.point(540, 500)).moveTo(PointOption.point(540, 800)).release().perform();
-
-        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='Anansi and the Magic Stick']")));
-
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.Button[@text='VIEW ALL']")));
-        AndroidElement viewAllBtnForComics = (AndroidElement) driver.findElements(By.xpath("//android.widget.Button[@text='VIEW ALL']")).get(0);
-        viewAllBtnForComics.click();
-
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/filter_label")));
-
-        //int count = 0;
-        //while (driver.findElements(By.xpath("//android.widget.TextView[@text='THE PASTOR'S KID']")).size() == 0 && count < 9){
-
-          //  touchAction.press(PointOption.point(540, 900)).moveTo(PointOption.point(540, 500)).release().perform();
-        //    count++;
-        //}
-
         int count = 0;
         while (driver.findElements(By.xpath("//android.widget.TextView[@text='"+actualAudioBookTitle+"']")).size() == 0 && count < 9){
 
             touchAction.press(PointOption.point(540, 900)).moveTo(PointOption.point(540, 500)).release().perform();
             count++;
         }
-
-
-        //String ComicBeforeReturn = driver.findElement(By.xpath("//android.widget.TextView[@text='"+actualAudioBookTitle+"']")).getText();
-
-
-        //((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
-        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.android.systemui:id/dismiss_task")));
-        //((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
-
-        //AndroidElement lastAudioBook = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_container")).get(1);
-        //lastAudioBook.click();
-
         AndroidElement firstXBtn = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_x")).get(0);
         firstXBtn.click();
-        //Thread.sleep(1200);
+
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("android:id/progress")));
-
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//android.widget.TextView[@text='"+actualAudioBookTitle+"']")));
-
-
-        List returnedComics = driver.findElements(By.xpath("//android.widget.TextView[@text='"+actualAudioBookTitle+"']"));
-        //Assert.assertEquals(ComicBeforeReturn, "THE PASTOR'S KID");
-        Assert.assertEquals(returnedComics.size(), 0);
     }
 
     @Test
@@ -303,10 +225,10 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/sort_spinner_text_view")));
 
 
-        AndroidElement title = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_title")).get(0);
+        AndroidElement title = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_title")).get(1);
         actualBookTitle = title.getText();
 
-        openElement(0);
+        openElement(1);
 
         if(driver.findElements(By.xpath("//android.widget.TextView[@text='READ']")).size() != 0){
             driver.findElement(By.xpath("//android.widget.TextView[@text='RETURN']")).click();
@@ -417,9 +339,9 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='MAGAZINES']")));
 
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/sort_spinner_text_view")));
-        openElement(0);
+        openElement(1);
 
-        String actualMagDescription = driver.findElement(By.id("com.ocd:id/activity_media_info_description")).getText();
+        //String actualMagDescription = driver.findElement(By.id("com.ocd:id/activity_media_info_description")).getText();
 
 
         if(driver.findElements(By.xpath("//android.widget.TextView[@text='READ']")).size() != 0){
@@ -451,7 +373,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='CHECKOUT']")));
 
         Assert.assertTrue(driver.findElement(By.xpath("//android.widget.TextView[@text='CHECKOUT']")).isDisplayed());
-        Assert.assertTrue(actualMagDescription.contains("Prevention magazine gives you healthy solutions you can really live with."));
+        //Assert.assertTrue(actualMagDescription.contains("Prevention magazine gives you healthy solutions you can really live with."));
     }
 
     @Test
@@ -606,7 +528,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='EBOOKS']")));
 
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/sort_spinner_text_view")));
-        openElement(0);
+        openElement(1);
 
         //String actualBookDescription = driver.findElement(By.id("com.ocd:id/activity_media_info_description")).getText();
 
