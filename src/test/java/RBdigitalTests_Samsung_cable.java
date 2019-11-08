@@ -458,28 +458,8 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
 
 
         //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='EBOOKS']")));
-        goToEBookPage();
+        goToEBookViewAllPage();
 
-        AndroidElement viewAllBtn = (AndroidElement) driver.findElement(By.id("com.ocd:id/titles_header_view_all"));
-        viewAllBtn.click();
-
-        ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
-        driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
-
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/pagination_two")));
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/filter_label")));
-
-        //TouchAction tB = new TouchAction(driver);
-
-        //int count = 0;
-        //while (driver.findElements(By.xpath("//android.widget.TextView[@text='X-MEN: DAYS OF FUTURE PAST - SPECIAL']")).size() == 0 && count < 10){
-
-        //    tB.press(PointOption.point(540, 640)).moveTo(PointOption.point(540, 600)).release().perform();
-
-        //}
-
-        //AndroidElement mag = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='US WEEKLY']"));
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/sort_spinner_text_view")));
 
 
@@ -1004,7 +984,7 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
     public void Test_17_EBookWishlist() {
         WebDriverWait wait = new WebDriverWait(driver, 40);
 
-        goToEBookPage();
+        goToEBookViewAllPage();
 
         AndroidElement viewAllBtn = (AndroidElement) driver.findElement(By.id("com.ocd:id/titles_header_view_all"));
         viewAllBtn.click();
@@ -1157,7 +1137,7 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
     public void Test_21_EBookHold() {
         WebDriverWait wait = new WebDriverWait(driver, 30);
 
-        goToEBookPage();
+        goToEBookViewAllPage();
 
         TouchAction tA = new TouchAction(driver);
         int count = 0;

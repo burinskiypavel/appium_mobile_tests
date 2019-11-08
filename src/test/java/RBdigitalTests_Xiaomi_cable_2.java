@@ -158,7 +158,7 @@ public class RBdigitalTests_Xiaomi_cable_2 extends BaseTest {
     public void Test_21_EBookHold() {
         WebDriverWait wait = new WebDriverWait(driver, 30);
 
-        goToEBookPage();
+        goToEBookViewAllPage();
 
         TouchAction tA = new TouchAction(driver);
         int count = 0;

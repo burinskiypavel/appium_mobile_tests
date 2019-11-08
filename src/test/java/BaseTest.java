@@ -153,7 +153,7 @@ public class BaseTest {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/sort_spinner_text_view")));
     }
 
-    public void goToEBookPage() {
+    public void goToEBookViewAllPage() {
         WebDriverWait wait = new WebDriverWait(driver, 30);
         AndroidElement iconMenu = (AndroidElement) driver.findElement(By.id("com.ocd:id/top_icon_menu"));
         iconMenu.click();
@@ -170,9 +170,20 @@ public class BaseTest {
         driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
 
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='EBOOKS']")));
+
+        AndroidElement viewAllBtn = (AndroidElement) driver.findElement(By.id("com.ocd:id/titles_header_view_all"));
+        viewAllBtn.click();
+
+        ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
+        driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/pagination_two")));
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/filter_label")));
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/sort_spinner_text_view")));
     }
 
-    public void pressCheckout() {
+    public void pressCheckoutEAduio() {
         WebDriverWait wait = new WebDriverWait(driver, 45);
 
         if(driver.findElements(By.xpath("//android.widget.TextView[@text='PLAY']")).size() != 0){
@@ -344,6 +355,46 @@ public class BaseTest {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/filter_label")));
     }
 
+    public void returnAudiobook(String actualAudioBookTitle) {
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        TouchAction touchAction = new TouchAction(driver);
+        int count = 0;
+        while (driver.findElements(By.xpath("//android.widget.TextView[@text='"+actualAudioBookTitle+"']")).size() == 0 && count < 9){
+
+            touchAction.press(PointOption.point(540, 900)).moveTo(PointOption.point(540, 500)).release().perform();
+            count++;
+        }
+        AndroidElement firstXBtn = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_x")).get(0);
+        firstXBtn.click();
+
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("android:id/progress")));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//android.widget.TextView[@text='"+actualAudioBookTitle+"']")));
+    }
+
+    public void pressCheckoutEBook() {
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+
+        if(driver.findElements(By.xpath("//android.widget.TextView[@text='READ']")).size() != 0){
+            driver.findElement(By.xpath("//android.widget.TextView[@text='RETURN']")).click();
+            driver.findElement(By.xpath("//android.widget.Button[@text='YES']")).click();
+            wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/activity_media_info_play")));
+        }
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/activity_media_info_play")));
+        AndroidElement checkoutBtn = (AndroidElement) driver.findElement(By.id("com.ocd:id/activity_media_info_play"));
+        checkoutBtn.click();
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/activity_media_info_play")));
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/activity_media_info_left_button")));
+    }
+
+    public void pressCheckout() {
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/activity_media_info_play")));
+        AndroidElement checkoutBtn = (AndroidElement) driver.findElement(By.id("com.ocd:id/activity_media_info_play"));
+        checkoutBtn.click();
+    }
+}
+
 
     /*
     public void swipeVertical_(AppiumDriver<MobileElement> driver, double startPercentage, double finalPercentage, int duration){
@@ -386,6 +437,6 @@ public class BaseTest {
     */
 
 
-}
+
 
 
