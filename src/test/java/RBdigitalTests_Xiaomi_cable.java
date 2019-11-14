@@ -104,8 +104,8 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
     @Test
     public void Test_02_MagazineCheckout_Return() throws InterruptedException {
         goToMagazinePage();
-        actualMagTitle = getTitleOfElement(1);
-        openElement(1);
+        actualMagTitle = getTitleOfElement(0);
+        openElement(0);
         //String actualMagDescription = driver.findElement(By.id("com.ocd:id/activity_media_info_description")).getText();
         pressMagCheckout();
         thenIShouldSeeReadBtn();
@@ -157,7 +157,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         goToAudiobookPage();
         actualAudioBookTitle = getTitleOfElement(2);
         openElement(2);
-        pressCheckoutEAduio();
+        pressCheckoutEAudio();
         thenIShouldSeeReadBtn();
         thenIShouldSeeReturnBtn();
         //Assert.assertTrue(actualAudioBookDescription.contains("Described as \"one of the best coming-of-age novels of the twentieth century,\" Theodore Weesner's modern American classic is now on audio! It's 1959. Sixteen-year-old Alex Housman has just stolen his fourteenth car and frankly doesn't know why. His divorced, working-class father grinds out the night shift at the local Chevy plant in Detroit and looks forward to the flask in his glove compartment and the open bottles of booze in his Flint, Michigan, home. Broke and fighting to survive, Alex and his father face the realities of estrangement, incarceration, and even violence as their lives unfold toward the climactic episode that a New York Times reviewer called \"one of the most profoundly powerful in American fiction.\" In this rich, beautifully crafted story, Weesner has written a transcendent piece of literature in deceptively simple language, painting a powerful portrait of a father and a son otherwise invisible among the mundane, everyday details of life in blue-collar America. It is a true and enduring American classic."));
@@ -181,71 +181,30 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
     }
 
     @Test
-    public void Test_08_EBookCheckout(){
-        WebDriverWait wait = new WebDriverWait(driver, 40);
-
+    public void Test_08_EBookCheckout_Return() throws InterruptedException {
+        //WebDriverWait wait = new WebDriverWait(driver, 40);
         goToEBookViewAllPage();
-
-        //AndroidElement viewAllBtn = (AndroidElement) driver.findElement(By.id("com.ocd:id/titles_header_view_all"));
-        //viewAllBtn.click();
-
-        //((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
-        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
-        //driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
-
-        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/pagination_two")));
-        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/filter_label")));
-        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/sort_spinner_text_view")));
-
-
-        AndroidElement title = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_title")).get(1);
-        actualBookTitle = title.getText();
-
+        actualBookTitle = getTitleOfElement(1);
         openElement(1);
-
-        //if(driver.findElements(By.xpath("//android.widget.TextView[@text='READ']")).size() != 0){
-        //    driver.findElement(By.xpath("//android.widget.TextView[@text='RETURN']")).click();
-        //    driver.findElement(By.xpath("//android.widget.Button[@text='YES']")).click();
-        //    wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/activity_media_info_play")));
-        //}
-
         pressCheckoutEBook();
-
-        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/activity_media_info_play")));
-        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/activity_media_info_left_button")));
         thenIShouldSeeReadBtn();
         thenIShouldSeeReturnBtn();
         //Assert.assertTrue(actualAudioBookDescription.contains("Raising funds to fulfill a nonprofit organization's goals is critical to its success"));
+        goToCheckedOutPage();
+        goToCheckedOutViewAllEbookPage();
+        returnEbook(actualBookTitle);
+        List returnedComics = driver.findElements(By.xpath("//android.widget.TextView[@text='"+actualBookTitle+"']"));
+        //Assert.assertEquals(ComicBeforeReturn, "THE LAW OF FUNDRAISING");
+        Assert.assertEquals(returnedComics.size(), 0);
     }
 
 
-    @Test
+    @Test(enabled = false)
     public void Test_09_EBookReturn() throws InterruptedException {
-        WebDriverWait wait = new WebDriverWait(driver, 40);
-
+        //WebDriverWait wait = new WebDriverWait(driver, 40);
         goToCheckedOutPage();
-
-        TouchAction touchAction = new TouchAction(driver);
-        touchAction.press(PointOption.point(540, 500)).moveTo(PointOption.point(540, 800)).release().perform();
-
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.Button[@text='VIEW ALL']")));
-        Thread.sleep(1500);
-        AndroidElement viewAllBtnForComics = (AndroidElement) driver.findElements(By.xpath("//android.widget.Button[@text='VIEW ALL']")).get(1);
-        viewAllBtnForComics.click();
-
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/filter_label")));
-
-        int count = 0;
-        while (driver.findElements(By.xpath("//android.widget.TextView[@text='"+actualBookTitle+"']")).size() == 0 && count < 9){
-
-            touchAction.press(PointOption.point(540, 900)).moveTo(PointOption.point(540, 500)).release().perform();
-            count++;
-        }
-
-        AndroidElement firstXBtn = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_x")).get(0);
-        firstXBtn.click();
-
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("android:id/progress")));
+        goToCheckedOutViewAllEbookPage();
+        returnEbook(actualBookTitle);
 
         List returnedComics = driver.findElements(By.xpath("//android.widget.TextView[@text='"+actualBookTitle+"']"));
         //Assert.assertEquals(ComicBeforeReturn, "THE LAW OF FUNDRAISING");
@@ -254,7 +213,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
 
     @Test
     public void Test_10_SearchMagazine_Checkout_Return(){
-        WebDriverWait wait = new WebDriverWait(driver, 40);
+        WebDriverWait wait = new WebDriverWait(driver, 50);
         AndroidElement searchIcon = (AndroidElement) driver.findElement(By.id("com.ocd:id/top_icon_search"));
         searchIcon.click();
 
@@ -469,7 +428,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='EBOOKS']")));
 
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/sort_spinner_text_view")));
-        openElement(1);
+        openElement(0);
 
         //String actualBookDescription = driver.findElement(By.id("com.ocd:id/activity_media_info_description")).getText();
 
@@ -673,19 +632,18 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
 
         goToEBookViewAllPage();
 
-        AndroidElement viewAllBtn = (AndroidElement) driver.findElement(By.id("com.ocd:id/titles_header_view_all"));
-        viewAllBtn.click();
+        //AndroidElement viewAllBtn = (AndroidElement) driver.findElement(By.id("com.ocd:id/titles_header_view_all"));
+        //viewAllBtn.click();
 
-        ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
-        driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
+        //((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
+        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
+        //driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
 
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/pagination_two")));
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/filter_label")));
+        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/pagination_two")));
+        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/filter_label")));
 
 
-        //AndroidElement mag = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='US WEEKLY']"));
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/sort_spinner_text_view")));
+        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/sort_spinner_text_view")));
 
 
         AndroidElement title = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_title")).get(2);
@@ -741,13 +699,14 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
     }
 
     @Test
-    public void Test_19_AudiobookHold() {
+    public void Test_19_AudiobookHold() throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, 30);
 
         goToAudiobookPage();
 
         TouchAction tA = new TouchAction(driver);
 
+        Thread.sleep(1000);
         int count = 0;
         while (driver.findElements(By.xpath("//android.widget.TextView[@text='MOST POPULAR']")).size() == 0 && count < 7){
 
@@ -781,7 +740,6 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         if (driver.findElements(By.xpath("//android.widget.TextView[@text='REMOVE HOLD']")).size() != 0) {
             driver.findElement(By.xpath("//android.widget.TextView[@text='REMOVE HOLD']")).click();
             wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.TextView[@text='HOLD']")));
-            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//android.widget.TextView[@text='REMOVE HOLD']")));
         }
 
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.TextView[@text='HOLD']")));
@@ -805,6 +763,9 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
         driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
 
+        //wait.until(ExpectedConditions.elementToBeClickable(By.id("com.ocd:id/row_media_x")));
+        Thread.sleep(700);
+
         TouchAction touchAction = new TouchAction(driver);
         touchAction.press(PointOption.point(540, 500)).moveTo(PointOption.point(540, 800)).release().perform();
 
@@ -824,7 +785,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
     public void Test_21_EBookHold() {
         WebDriverWait wait = new WebDriverWait(driver, 30);
 
-        goToEBookViewAllPage();
+        goToEBookPage();
 
         TouchAction tA = new TouchAction(driver);
         int count = 0;

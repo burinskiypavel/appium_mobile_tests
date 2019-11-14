@@ -102,7 +102,7 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
 
 
     @Test
-    public void Test_02_RbdigitalMagazineCheckout(){
+    public void Test_02_RbdigitalMagazineCheckout() throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, 35);
 
         goToMagazinePage();

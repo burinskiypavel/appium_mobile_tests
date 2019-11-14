@@ -73,13 +73,14 @@ public class RBdigitalTests_Xiaomi_cable_2 extends BaseTest {
 
 
     @Test
-    public void Test_19_AudiobookHold() {
+    public void Test_19_AudiobookHold() throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, 30);
 
         goToAudiobookPage();
 
         TouchAction tA = new TouchAction(driver);
 
+        Thread.sleep(1000);
         int count = 0;
         while (driver.findElements(By.xpath("//android.widget.TextView[@text='MOST POPULAR']")).size() == 0 && count < 7){
 
@@ -137,7 +138,8 @@ public class RBdigitalTests_Xiaomi_cable_2 extends BaseTest {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
         driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
 
-        wait.until(ExpectedConditions.elementToBeClickable(By.id("com.ocd:id/row_media_x")));
+        //wait.until(ExpectedConditions.elementToBeClickable(By.id("com.ocd:id/row_media_x")));
+        Thread.sleep(700);
 
         TouchAction touchAction = new TouchAction(driver);
         touchAction.press(PointOption.point(540, 500)).moveTo(PointOption.point(540, 800)).release().perform();
