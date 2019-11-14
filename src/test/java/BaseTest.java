@@ -66,7 +66,7 @@ public class BaseTest {
         AndroidElement magazineComicTab = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='MAGAZINES & COMICS']"));
         magazineComicTab.click();
 
-        Thread.sleep(750);
+        Thread.sleep(850);
         AndroidElement firstFromListMagazine = (AndroidElement) driver.findElementsById("com.ocd:id/menu_child_name").get(1);
         firstFromListMagazine.click();
 
@@ -130,8 +130,8 @@ public class BaseTest {
         TouchAction touchAction = new TouchAction(driver);
         touchAction.press(PointOption.point(540, 500)).moveTo(PointOption.point(540, 800)).release().perform();
 
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.Button[@text='VIEW ALL']")));
         Thread.sleep(1500);
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.Button[@text='VIEW ALL']")));
         AndroidElement viewAllBtnForComics = (AndroidElement) driver.findElements(By.xpath("//android.widget.Button[@text='VIEW ALL']")).get(1);
         viewAllBtnForComics.click();
 
@@ -236,7 +236,7 @@ public class BaseTest {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='EBOOKS']")));
     }
 
-    public void pressCheckoutEAudio() {
+    public void pressCheckoutAudiobook() {
         WebDriverWait wait = new WebDriverWait(driver, 45);
 
         if(driver.findElements(By.xpath("//android.widget.TextView[@text='PLAY']")).size() != 0){
@@ -259,10 +259,21 @@ public class BaseTest {
         firstMag.click();
     }
 
+    public void openElementFromSearchResult(int number) {
+        number = number - 1;
+        AndroidElement firstMag = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_container")).get(number);
+        firstMag.click();
+    }
+
     public String getTitleOfElement(int number) {
         AndroidElement titleMag = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_title")).get(number);
         String actualTitle = titleMag.getText();
         return actualTitle;
+    }
+
+    public String getDescriptionOfElement() {
+        String actualElementDescription = driver.findElement(By.id("com.ocd:id/activity_media_info_description")).getText();
+        return actualElementDescription;
     }
 
     public void pressMagCheckout() {
@@ -272,7 +283,7 @@ public class BaseTest {
            driver.findElement(By.xpath("//android.widget.TextView[@text='RETURN']")).click();
            driver.findElement(By.xpath("//android.widget.Button[@text='YES']")).click();
            wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/activity_media_info_play")));
-            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//android.widget.TextView[@text='READ']")));
+           wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//android.widget.TextView[@text='READ']")));
         }
 
         AndroidElement checkoutBtn = (AndroidElement) driver.findElement(By.id("com.ocd:id/activity_media_info_play"));
@@ -320,8 +331,8 @@ public class BaseTest {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='"+actualMagTitle+"']")));
         String EconomistMagBeforeReturn = driver.findElement(By.xpath("//android.widget.TextView[@text='"+actualMagTitle+"']")).getText();
 
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.Button[@text='VIEW ALL']")));
         Thread.sleep(1500);
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.Button[@text='VIEW ALL']")));
         AndroidElement viewAllBtnForMagazine = (AndroidElement) driver.findElements(By.xpath("//android.widget.Button[@text='VIEW ALL']")).get(0);
         viewAllBtnForMagazine.click();
 
@@ -359,6 +370,7 @@ public class BaseTest {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='"+actualComTitle+"']")));
         String ComicBeforeReturn = driver.findElement(By.xpath("//android.widget.TextView[@text='"+actualComTitle+"']")).getText();
 
+        Thread.sleep(1500);
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.Button[@text='VIEW ALL']")));
         AndroidElement viewAllBtnForComics = (AndroidElement) driver.findElements(By.xpath("//android.widget.Button[@text='VIEW ALL']")).get(0);
         viewAllBtnForComics.click();
@@ -392,6 +404,10 @@ public class BaseTest {
 
     public void thenIShouldSeeReadBtn() {
         Assert.assertTrue(driver.findElement(By.id("com.ocd:id/activity_media_info_play")).isDisplayed());
+    }
+
+    public void thenIShouldSeeCheckoutBtn() {
+        Assert.assertTrue(driver.findElement(By.xpath("//android.widget.TextView[@text='CHECKOUT']")).isDisplayed());
     }
 
     public void thenIShouldNotSeeReturnBtn() {
@@ -465,7 +481,135 @@ public class BaseTest {
         AndroidElement checkoutBtn = (AndroidElement) driver.findElement(By.id("com.ocd:id/activity_media_info_play"));
         checkoutBtn.click();
     }
+
+    public void searchMagazineByTitle(String title){
+        WebDriverWait wait = new WebDriverWait(driver, 50);
+
+        AndroidElement magazinesTab = (AndroidElement) driver.findElement(By.id("com.ocd:id/search_select_magazines"));
+        magazinesTab.click();
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.EditText[@text='Name']")));
+
+        AndroidElement nameEdit = (AndroidElement) driver.findElement(By.xpath("//android.widget.EditText[@text='Name']"));
+        nameEdit.sendKeys(title);
+
+        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='Prevention Magazine Australia']")));
+
+        AndroidElement searchCommit = (AndroidElement) driver.findElement(By.id("com.ocd:id/search_commit"));
+        searchCommit.click();
+
+        ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
+        driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='"+title+"']")));
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='MAGAZINES']")));
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/sort_spinner_text_view")));
+    }
+
+    public void searchComicByTitle(String title){
+        WebDriverWait wait = new WebDriverWait(driver, 50);
+
+        AndroidElement comicsTab = (AndroidElement) driver.findElement(By.id("com.ocd:id/search_select_comics"));
+        comicsTab.click();
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.EditText[@text='Name']")));
+        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.EditText[@text='Title']")));
+
+        AndroidElement nameEdit = (AndroidElement) driver.findElement(By.xpath("//android.widget.EditText[@text='Name']"));
+        nameEdit.sendKeys(title);
+
+        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='Minisulk']")));
+
+        AndroidElement searchCommit = (AndroidElement) driver.findElement(By.id("com.ocd:id/search_commit"));
+        searchCommit.click();
+
+        ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
+        driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='"+title+"']")));
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='COMICS']")));
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/sort_spinner_text_view")));
+    }
+
+    public void searchAudiobookByTitle(String title){
+        WebDriverWait wait = new WebDriverWait(driver, 50);
+
+        AndroidElement audioBookTab = (AndroidElement) driver.findElement(By.id("com.ocd:id/search_select_audiobooks"));
+        audioBookTab.click();
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.EditText[@text='Name']")));
+        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.EditText[@text='Title']")));
+
+        AndroidElement nameEdit = (AndroidElement) driver.findElement(By.xpath("//android.widget.EditText[@text='Name']"));
+        nameEdit.sendKeys(title);
+
+        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='Minisulk']")));
+
+        AndroidElement searchCommit = (AndroidElement) driver.findElement(By.id("com.ocd:id/search_commit"));
+        searchCommit.click();
+
+        ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
+        driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='"+title+"']")));
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='AUDIOBOOKS']")));
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/sort_spinner_text_view")));
+    }
+
+    public void searchEbookByTitle(String title){
+        WebDriverWait wait = new WebDriverWait(driver, 50);
+
+
+        AndroidElement EBookTab = (AndroidElement) driver.findElement(By.id("com.ocd:id/search_select_ebooks"));
+        EBookTab.click();
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.EditText[@text='Name']")));
+        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.EditText[@text='Title']")));
+
+        AndroidElement nameEdit = (AndroidElement) driver.findElement(By.xpath("//android.widget.EditText[@text='Name']"));
+        nameEdit.sendKeys(title);
+
+        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='Slob']")));
+
+        AndroidElement searchCommit = (AndroidElement) driver.findElement(By.id("com.ocd:id/search_commit"));
+        searchCommit.click();
+
+        ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
+        driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='"+title+"']")));
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='EBOOKS']")));
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/sort_spinner_text_view")));
+    }
+
+    public void openSearch() {
+        AndroidElement searchIcon = (AndroidElement) driver.findElement(By.id("com.ocd:id/top_icon_search"));
+        searchIcon.click();
+    }
+
+    public void returnFromDetailPage(){
+        WebDriverWait wait = new WebDriverWait(driver, 40);
+
+        AndroidElement returnBtn = (AndroidElement) driver.findElement(By.id("com.ocd:id/activity_media_info_left_button"));
+        returnBtn.click();
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("android:id/button1")));
+        AndroidElement yesBtn = (AndroidElement) driver.findElement(By.id("android:id/button1"));
+        yesBtn.click();
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='CHECKOUT']")));
+
+    }
 }
+
 
 
     /*

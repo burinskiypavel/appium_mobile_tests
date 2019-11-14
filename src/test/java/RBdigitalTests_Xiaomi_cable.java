@@ -117,16 +117,8 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         thenIShouldNotSeeReturnBtn();
     }
 
-    @Test(enabled = false)
-    public void Test_03_MagazineReturn() throws InterruptedException {
-        //WebDriverWait wait1 = new WebDriverWait(driver, 30);
-        goToCheckedOutPage();
-        returnMagazine(actualMagTitle);
-        thenIShouldNotSeeReturnBtn();
-    }
-
     @Test
-    public void Test_04_ComicCheckout_Return() throws InterruptedException {
+    public void Test_03_ComicCheckout_Return() throws InterruptedException {
         goToComicsPage();
         actualComTitle = getTitleOfElement(1);
         openElement(1);
@@ -142,22 +134,12 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         //Assert.assertEquals(ComicBeforeReturn, ""+actualComTit
     }
 
-    @Test(enabled = false)
-    public void Test_05_ComicsReturn() throws InterruptedException {
-        //WebDriverWait wait = new WebDriverWait(driver, 35);
-        goToCheckedOutPage();
-        returnComic(actualComTitle);
-        List returnedComics = driver.findElements(By.xpath("//android.widget.TextView[@text='"+actualComTitle+"']"));
-        //Assert.assertEquals(ComicBeforeReturn, ""+actualComTitle+"");
-        Assert.assertEquals(returnedComics.size(), 0);
-    }
-
     @Test
-    public void Test_06_AudiobookCheckout_Return(){
+    public void Test_04_AudiobookCheckout_Return(){
         goToAudiobookPage();
         actualAudioBookTitle = getTitleOfElement(2);
         openElement(2);
-        pressCheckoutEAudio();
+        pressCheckoutAudiobook();
         thenIShouldSeeReadBtn();
         thenIShouldSeeReturnBtn();
         //Assert.assertTrue(actualAudioBookDescription.contains("Described as \"one of the best coming-of-age novels of the twentieth century,\" Theodore Weesner's modern American classic is now on audio! It's 1959. Sixteen-year-old Alex Housman has just stolen his fourteenth car and frankly doesn't know why. His divorced, working-class father grinds out the night shift at the local Chevy plant in Detroit and looks forward to the flask in his glove compartment and the open bottles of booze in his Flint, Michigan, home. Broke and fighting to survive, Alex and his father face the realities of estrangement, incarceration, and even violence as their lives unfold toward the climactic episode that a New York Times reviewer called \"one of the most profoundly powerful in American fiction.\" In this rich, beautifully crafted story, Weesner has written a transcendent piece of literature in deceptively simple language, painting a powerful portrait of a father and a son otherwise invisible among the mundane, everyday details of life in blue-collar America. It is a true and enduring American classic."));
@@ -169,20 +151,8 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         Assert.assertEquals(returnedComics.size(), 0);
     }
 
-    @Test(enabled = false)
-    public void Test_07_AudiobookReturn() throws InterruptedException {
-        //WebDriverWait wait = new WebDriverWait(driver, 30);
-        goToCheckedOutPage();
-        openCheckedOutEAudioPage();
-        returnAudiobook(actualAudioBookTitle);
-        List returnedComics = driver.findElements(By.xpath("//android.widget.TextView[@text='"+actualAudioBookTitle+"']"));
-        //Assert.assertEquals(ComicBeforeReturn, "THE PASTOR'S KID");
-        Assert.assertEquals(returnedComics.size(), 0);
-    }
-
     @Test
-    public void Test_08_EBookCheckout_Return() throws InterruptedException {
-        //WebDriverWait wait = new WebDriverWait(driver, 40);
+    public void Test_05_EBookCheckout_Return() throws InterruptedException {
         goToEBookViewAllPage();
         actualBookTitle = getTitleOfElement(1);
         openElement(1);
@@ -198,266 +168,59 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         Assert.assertEquals(returnedComics.size(), 0);
     }
 
-
-    @Test(enabled = false)
-    public void Test_09_EBookReturn() throws InterruptedException {
-        //WebDriverWait wait = new WebDriverWait(driver, 40);
-        goToCheckedOutPage();
-        goToCheckedOutViewAllEbookPage();
-        returnEbook(actualBookTitle);
-
-        List returnedComics = driver.findElements(By.xpath("//android.widget.TextView[@text='"+actualBookTitle+"']"));
-        //Assert.assertEquals(ComicBeforeReturn, "THE LAW OF FUNDRAISING");
-        Assert.assertEquals(returnedComics.size(), 0);
+    @Test
+    public void Test_06_SearchMagazine_Checkout_ReturnFromDetailPage(){
+        openSearch();
+        searchMagazineByTitle("PREVENTION");
+        openElementFromSearchResult(2);
+        pressMagCheckout();
+        thenIShouldSeeReadBtn();
+        thenIShouldSeeReturnBtn();
+        returnFromDetailPage();
+        thenIShouldSeeCheckoutBtn();
     }
 
     @Test
-    public void Test_10_SearchMagazine_Checkout_Return(){
-        WebDriverWait wait = new WebDriverWait(driver, 50);
-        AndroidElement searchIcon = (AndroidElement) driver.findElement(By.id("com.ocd:id/top_icon_search"));
-        searchIcon.click();
-
-        AndroidElement magazinesTab = (AndroidElement) driver.findElement(By.id("com.ocd:id/search_select_magazines"));
-        magazinesTab.click();
-
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.EditText[@text='Name']")));
-        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.EditText[@text='Title']")));
-
-        AndroidElement nameEdit = (AndroidElement) driver.findElement(By.xpath("//android.widget.EditText[@text='Name']"));
-        nameEdit.sendKeys("PREVENTION");
-
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='Prevention Magazine Australia']")));
-
-        AndroidElement searchCommit = (AndroidElement) driver.findElement(By.id("com.ocd:id/search_commit"));
-        searchCommit.click();
-
-        ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
-        driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
-
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='PREVENTION']")));
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='MAGAZINES']")));
-
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/sort_spinner_text_view")));
-        openElement(1);
-
-        //String actualMagDescription = driver.findElement(By.id("com.ocd:id/activity_media_info_description")).getText();
-
-
-        if(driver.findElements(By.xpath("//android.widget.TextView[@text='READ']")).size() != 0){
-            driver.findElement(By.xpath("//android.widget.TextView[@text='RETURN']")).click();
-            driver.findElement(By.xpath("//android.widget.Button[@text='YES']")).click();
-            wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/activity_media_info_play")));
-        }
-
-        pressCheckout();
-
-        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/confirmation_checkbox")));
-        //AndroidElement confirmationCheckbox = (AndroidElement) driver.findElement(By.id("com.ocd:id/confirmation_checkbox"));
-        //confirmationCheckbox.click();
-
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/dialog_ok_button")));
-        AndroidElement okButton = (AndroidElement) driver.findElement(By.id("com.ocd:id/dialog_ok_button"));
-        okButton.click();
-
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/activity_media_info_play")));
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/activity_media_info_left_button")));
-
-        AndroidElement returnBtn = (AndroidElement) driver.findElement(By.id("com.ocd:id/activity_media_info_left_button"));
-        returnBtn.click();
-
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("android:id/button1")));
-        AndroidElement yesBtn = (AndroidElement) driver.findElement(By.id("android:id/button1"));
-        yesBtn.click();
-
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='CHECKOUT']")));
-
-        Assert.assertTrue(driver.findElement(By.xpath("//android.widget.TextView[@text='CHECKOUT']")).isDisplayed());
-        //Assert.assertTrue(actualMagDescription.contains("Prevention magazine gives you healthy solutions you can really live with."));
-    }
-
-    @Test
-    public void Test_11_SearchComic_Checkout_Return(){
-        WebDriverWait wait = new WebDriverWait(driver, 30);
-        AndroidElement searchIcon = (AndroidElement) driver.findElement(By.id("com.ocd:id/top_icon_search"));
-        searchIcon.click();
-
-        AndroidElement comicsTab = (AndroidElement) driver.findElement(By.id("com.ocd:id/search_select_comics"));
-        comicsTab.click();
-
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.EditText[@text='Name']")));
-        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.EditText[@text='Title']")));
-
-        AndroidElement nameEdit = (AndroidElement) driver.findElement(By.xpath("//android.widget.EditText[@text='Name']"));
-        nameEdit.sendKeys("MINISULK");
-
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='Minisulk']")));
-
-        AndroidElement searchCommit = (AndroidElement) driver.findElement(By.id("com.ocd:id/search_commit"));
-        searchCommit.click();
-
-        ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
-        driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
-
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='MINISULK']")));
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='COMICS']")));
-
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/sort_spinner_text_view")));
-        openElement(0);
-
-        String actualComDescription = driver.findElement(By.id("com.ocd:id/activity_media_info_description")).getText();
-
-        if(driver.findElements(By.xpath("//android.widget.TextView[@text='READ']")).size() != 0){
-            driver.findElement(By.xpath("//android.widget.TextView[@text='RETURN']")).click();
-            driver.findElement(By.xpath("//android.widget.Button[@text='YES']")).click();
-            wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/activity_media_info_play")));
-        }
-
-        pressCheckout();
-
-        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/confirmation_checkbox")));
-        //AndroidElement confirmationCheckbox = (AndroidElement) driver.findElement(By.id("com.ocd:id/confirmation_checkbox"));
-        //confirmationCheckbox.click();
-
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/dialog_ok_button")));
-        AndroidElement okButton = (AndroidElement) driver.findElement(By.id("com.ocd:id/dialog_ok_button"));
-        okButton.click();
-
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/activity_media_info_play")));
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/activity_media_info_left_button")));
-
-        AndroidElement returnBtn = (AndroidElement) driver.findElement(By.id("com.ocd:id/activity_media_info_left_button"));
-        returnBtn.click();
-
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("android:id/button1")));
-        AndroidElement yesBtn = (AndroidElement) driver.findElement(By.id("android:id/button1"));
-        yesBtn.click();
-
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='CHECKOUT']")));
-
-        Assert.assertTrue(driver.findElement(By.xpath("//android.widget.TextView[@text='CHECKOUT']")).isDisplayed());
+    public void Test_07_SearchComic_Checkout_ReturnFromDetailPage(){
+        openSearch();
+        searchComicByTitle("MINISULK");
+        openElementFromSearchResult(1);
+        String actualComDescription = getDescriptionOfElement();
+        pressComCheckout();
+        thenIShouldSeeReadBtn();
+        thenIShouldSeeReturnBtn();
+        returnFromDetailPage();
+        thenIShouldSeeCheckoutBtn();
         Assert.assertTrue(actualComDescription.contains("Jeffrey Brown takes a break from books about girls for this humorous short story collection featuring fiction, gags and autobiography."));
     }
 
-
     @Test
-    public void Test_12_SearchAudioBook_Checkout_Return(){
-        WebDriverWait wait = new WebDriverWait(driver, 26);
-        AndroidElement searchIcon = (AndroidElement) driver.findElement(By.id("com.ocd:id/top_icon_search"));
-        searchIcon.click();
-
-        AndroidElement audioBookTab = (AndroidElement) driver.findElement(By.id("com.ocd:id/search_select_audiobooks"));
-        audioBookTab.click();
-
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.EditText[@text='Name']")));
-        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.EditText[@text='Title']")));
-
-        AndroidElement nameEdit = (AndroidElement) driver.findElement(By.xpath("//android.widget.EditText[@text='Name']"));
-        nameEdit.sendKeys("KINGS OF THE EARTH");
-
-        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='Minisulk']")));
-
-        AndroidElement searchCommit = (AndroidElement) driver.findElement(By.id("com.ocd:id/search_commit"));
-        searchCommit.click();
-
-        ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
-        driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
-
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='KINGS OF THE EARTH']")));
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='AUDIOBOOKS']")));
-
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/sort_spinner_text_view")));
-        openElement(0);
-
-        String actualAudiobookDescription = driver.findElement(By.id("com.ocd:id/activity_media_info_description")).getText();
-
-        pressCheckout();
-
-        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/confirmation_checkbox")));
-        //AndroidElement confirmationCheckbox = (AndroidElement) driver.findElement(By.id("com.ocd:id/confirmation_checkbox"));
-        //confirmationCheckbox.click();
-
-        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/dialog_ok_button")));
-        //AndroidElement okButton = (AndroidElement) driver.findElement(By.id("com.ocd:id/dialog_ok_button"));
-        //okButton.click();
-
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/activity_media_info_play")));
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/activity_media_info_left_button")));
-
-        AndroidElement returnBtn = (AndroidElement) driver.findElement(By.id("com.ocd:id/activity_media_info_left_button"));
-        returnBtn.click();
-
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("android:id/button1")));
-        AndroidElement yesBtn = (AndroidElement) driver.findElement(By.id("android:id/button1"));
-        yesBtn.click();
-
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='CHECKOUT']")));
-
-        Assert.assertTrue(driver.findElement(By.xpath("//android.widget.TextView[@text='CHECKOUT']")).isDisplayed());
+    public void Test_08_SearchAudiobook_Checkout_ReturnFromDetailPage(){
+        openSearch();
+        searchAudiobookByTitle("KINGS OF THE EARTH");
+        openElementFromSearchResult(1);
+        String actualAudiobookDescription = getDescriptionOfElement();
+        pressCheckoutAudiobook();
+        thenIShouldSeeReadBtn();
+        thenIShouldSeeReturnBtn();
+        returnFromDetailPage();
+        thenIShouldSeeCheckoutBtn();
         Assert.assertTrue(actualAudiobookDescription.contains("Author of the award-winning novel"));
     }
 
-
     @Test
-    public void Test_13_SearchEBook_Checkout_Return(){
-        WebDriverWait wait = new WebDriverWait(driver, 30);
-        AndroidElement searchIcon = (AndroidElement) driver.findElement(By.id("com.ocd:id/top_icon_search"));
-        searchIcon.click();
-
-        AndroidElement EBookTab = (AndroidElement) driver.findElement(By.id("com.ocd:id/search_select_ebooks"));
-        EBookTab.click();
-
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.EditText[@text='Name']")));
-        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.EditText[@text='Title']")));
-
-        AndroidElement nameEdit = (AndroidElement) driver.findElement(By.xpath("//android.widget.EditText[@text='Name']"));
-        nameEdit.sendKeys("SLOB");
-
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='Slob']")));
-
-        AndroidElement searchCommit = (AndroidElement) driver.findElement(By.id("com.ocd:id/search_commit"));
-        searchCommit.click();
-
-        ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
-        driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
-
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='SLOB']")));
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='EBOOKS']")));
-
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/sort_spinner_text_view")));
-        openElement(0);
-
-        //String actualBookDescription = driver.findElement(By.id("com.ocd:id/activity_media_info_description")).getText();
-
-        pressCheckout();
-
-        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/confirmation_checkbox")));
-        //AndroidElement confirmationCheckbox = (AndroidElement) driver.findElement(By.id("com.ocd:id/confirmation_checkbox"));
-        //confirmationCheckbox.click();
-
-        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/dialog_ok_button")));
-        //AndroidElement okButton = (AndroidElement) driver.findElement(By.id("com.ocd:id/dialog_ok_button"));
-        //okButton.click();
-
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/activity_media_info_play")));
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/activity_media_info_left_button")));
-
-        AndroidElement returnBtn = (AndroidElement) driver.findElement(By.id("com.ocd:id/activity_media_info_left_button"));
-        returnBtn.click();
-
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("android:id/button1")));
-        AndroidElement yesBtn = (AndroidElement) driver.findElement(By.id("android:id/button1"));
-        yesBtn.click();
-
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='CHECKOUT']")));
-
-        Assert.assertTrue(driver.findElement(By.xpath("//android.widget.TextView[@text='CHECKOUT']")).isDisplayed());
-        //Assert.assertTrue(actualBookDescription.contains("By the Booker Award-winning bestselling author of The Gathering, The Green Road"));
+    public void Test_09_SearchEBook_Checkout_ReturnFromDetailPage(){
+        openSearch();
+        searchEbookByTitle("SLOB");
+        openElementFromSearchResult(2);
+        String actualEbookDescription = getDescriptionOfElement();
+        pressCheckoutEBook();
+        thenIShouldSeeReadBtn();
+        thenIShouldSeeReturnBtn();
+        returnFromDetailPage();
+        thenIShouldSeeCheckoutBtn();
+        Assert.assertTrue(actualEbookDescription.contains("funny and smart"));
     }
-
 
     @Test(enabled = false)
     public void Test_14_1_AcornTV_Checkout() throws InterruptedException {
@@ -569,16 +332,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/pagination_two")));
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/filter_label")));
 
-        //TouchAction tB = new TouchAction(driver);
 
-        //int count = 0;
-        //while (driver.findElements(By.xpath("//android.widget.TextView[@text='X-MEN: DAYS OF FUTURE PAST - SPECIAL']")).size() == 0 && count < 10){
-
-        //    tB.press(PointOption.point(540, 640)).moveTo(PointOption.point(540, 600)).release().perform();
-
-        //}
-
-        //AndroidElement mag = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='US WEEKLY']"));
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/sort_spinner_text_view")));
 
         AndroidElement titleAudioBook = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_title")).get(1);
