@@ -142,12 +142,10 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         pressCheckoutAudiobook();
         thenIShouldSeeReadBtn();
         thenIShouldSeeReturnBtn();
-        //Assert.assertTrue(actualAudioBookDescription.contains("Described as \"one of the best coming-of-age novels of the twentieth century,\" Theodore Weesner's modern American classic is now on audio! It's 1959. Sixteen-year-old Alex Housman has just stolen his fourteenth car and frankly doesn't know why. His divorced, working-class father grinds out the night shift at the local Chevy plant in Detroit and looks forward to the flask in his glove compartment and the open bottles of booze in his Flint, Michigan, home. Broke and fighting to survive, Alex and his father face the realities of estrangement, incarceration, and even violence as their lives unfold toward the climactic episode that a New York Times reviewer called \"one of the most profoundly powerful in American fiction.\" In this rich, beautifully crafted story, Weesner has written a transcendent piece of literature in deceptively simple language, painting a powerful portrait of a father and a son otherwise invisible among the mundane, everyday details of life in blue-collar America. It is a true and enduring American classic."));
         goToCheckedOutPage();
         openCheckedOutEAudioPage();
         returnAudiobook(actualAudioBookTitle);
         List returnedComics = driver.findElements(By.xpath("//android.widget.TextView[@text='"+actualAudioBookTitle+"']"));
-        //Assert.assertEquals(ComicBeforeReturn, "THE PASTOR'S KID");
         Assert.assertEquals(returnedComics.size(), 0);
     }
 
@@ -159,12 +157,10 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         pressCheckoutEBook();
         thenIShouldSeeReadBtn();
         thenIShouldSeeReturnBtn();
-        //Assert.assertTrue(actualAudioBookDescription.contains("Raising funds to fulfill a nonprofit organization's goals is critical to its success"));
         goToCheckedOutPage();
         goToCheckedOutViewAllEbookPage();
         returnEbook(actualBookTitle);
         List returnedComics = driver.findElements(By.xpath("//android.widget.TextView[@text='"+actualBookTitle+"']"));
-        //Assert.assertEquals(ComicBeforeReturn, "THE LAW OF FUNDRAISING");
         Assert.assertEquals(returnedComics.size(), 0);
     }
 
