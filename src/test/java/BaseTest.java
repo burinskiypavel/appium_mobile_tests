@@ -66,7 +66,7 @@ public class BaseTest {
         AndroidElement magazineComicTab = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='MAGAZINES & COMICS']"));
         magazineComicTab.click();
 
-        Thread.sleep(850);
+        Thread.sleep(1000);
         AndroidElement firstFromListMagazine = (AndroidElement) driver.findElementsById("com.ocd:id/menu_child_name").get(1);
         firstFromListMagazine.click();
 
