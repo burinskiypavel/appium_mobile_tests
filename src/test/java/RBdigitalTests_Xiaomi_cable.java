@@ -80,32 +80,11 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         mainPage.Login("qauser", "password1");
     }
 
-    @Test(enabled = false)
-    public void Test_01_Login() throws Exception {
-        //DesiredCapabilities cap = new DesiredCapabilities();
-        //cap.setCapability("deviceName", "Redmi Note 4");
-        //cap.setCapability("udid", "6dcfacac0604");
-        //cap.setCapability("platformName", "Android");
-        //cap.setCapability("platformVersion", "7.0");
-        //cap.setCapability("appPackage", "com.ocd");
-        //cap.setCapability("appActivity", "com.ocd.activity.SplashActivity");
-        //driver = new AndroidDriver(new URL(" http://127.0.0.1:4723/wd/hub"), cap);
-        //mainPage = new MainPage(driver);
-        //baseTest = new BaseTest(driver);
-
-        //mainPage.Login();
-
-        //Assert.assertTrue(driver.findElement(By.xpath("//*[@class='android.widget.TextView'][@text='AUDIOBOOKS']")).isDisplayed());
-        //Assert.assertTrue(driver.findElement(By.id("com.ocd:id/top_icon_menu")).isDisplayed());
-        //Assert.assertTrue(driver.findElement(By.id("com.ocd:id/top_icon_search")).isDisplayed());
-        //Assert.assertTrue(driver.findElement(By.xpath("//*[@class='android.widget.TextView'][@text='CHECKED OUT']")).isDisplayed());
-    }
-
     @Test
-    public void Test_02_MagazineCheckout_Return() throws InterruptedException {
+    public void Test_RBdigitalAndroid_MagazineCheckout_ReturningExistingItem_SuccessReturning() throws InterruptedException {
         goToMagazinePage();
-        actualMagTitle = getTitleOfElement(0);
-        openElement(0);
+        actualMagTitle = getTitleOfElement(2);
+        openElement(2);
         //String actualMagDescription = driver.findElement(By.id("com.ocd:id/activity_media_info_description")).getText();
         pressMagCheckout();
         thenIShouldSeeReadBtn();
@@ -118,7 +97,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
     }
 
     @Test
-    public void Test_03_ComicCheckout_Return() throws InterruptedException {
+    public void Test_RBdigitalAndroid_ComicCheckout_ReturningExistingItem_SuccessReturning() throws InterruptedException {
         goToComicsPage();
         actualComTitle = getTitleOfElement(1);
         openElement(1);
@@ -135,7 +114,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
     }
 
     @Test
-    public void Test_04_AudiobookCheckout_Return(){
+    public void Test_RBdigitalAndroid_AudiobookCheckout_ReturningExistingItem_SuccessReturning(){
         goToAudiobookPage();
         actualAudioBookTitle = getTitleOfElement(2);
         openElement(2);
@@ -150,7 +129,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
     }
 
     @Test
-    public void Test_05_EBookCheckout_Return() throws InterruptedException {
+    public void Test_RBdigitalAndroid_EBookCheckout_ReturningExistingItem_SuccessReturning() throws InterruptedException {
         goToEBookViewAllPage();
         actualBookTitle = getTitleOfElement(1);
         openElement(1);
@@ -165,7 +144,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
     }
 
     @Test
-    public void Test_06_SearchMagazine_Checkout_ReturnFromDetailPage(){
+    public void Test_RBdigitalAndroid_SearchMagazine_Checkout_ReturnFromDetailPage_SuccessReturning(){
         openSearch();
         searchMagazineByTitle("PREVENTION");
         openElementFromSearchResult(2);
@@ -177,7 +156,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
     }
 
     @Test
-    public void Test_07_SearchComic_Checkout_ReturnFromDetailPage(){
+    public void Test_RBdigitalAndroid_SearchComic_Checkout_ReturnFromDetailPage_SuccessReturning(){
         openSearch();
         searchComicByTitle("MINISULK");
         openElementFromSearchResult(1);
@@ -191,7 +170,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
     }
 
     @Test
-    public void Test_08_SearchAudiobook_Checkout_ReturnFromDetailPage(){
+    public void Test_RBdigitalAndroid_SearchAudiobook_Checkout_ReturnFromDetailPage_SuccessReturning(){
         openSearch();
         searchAudiobookByTitle("KINGS OF THE EARTH");
         openElementFromSearchResult(1);
@@ -205,7 +184,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
     }
 
     @Test
-    public void Test_09_SearchEBook_Checkout_ReturnFromDetailPage(){
+    public void Test_RBdigitalAndroid_SearchEBook_Checkout_ReturnFromDetailPage_SuccessReturning(){
         openSearch();
         searchEbookByTitle("SLOB");
         openElementFromSearchResult(2);
@@ -242,7 +221,6 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
             count++;
         }
         while (driver.findElements(By.id("access")).size() == 0 && count < 7);
-
 
         //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.view.View[@text='800words']")));
 
@@ -286,12 +264,10 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
             count++;
         }
 
-
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.Button[@text='VIEW ALL']")));
         Thread.sleep(1700);
         AndroidElement viewAllBtnForComics = (AndroidElement) driver.findElements(By.xpath("//android.widget.Button[@text='VIEW ALL']")).get(1);
         viewAllBtnForComics.click();
-
 
 
         ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
@@ -306,9 +282,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.Button[@text='YES']")));
         AndroidElement acseptAlert = (AndroidElement) driver.findElement(By.xpath("//android.widget.Button[@text='YES']"));
         acseptAlert.click();
-
         //Assert.assertTrue(driver.findElement(By.id("access")).isDisplayed());
-
     }
 
 

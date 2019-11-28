@@ -66,7 +66,7 @@ public class BaseTest {
         AndroidElement magazineComicTab = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='MAGAZINES & COMICS']"));
         magazineComicTab.click();
 
-        Thread.sleep(1000);
+        Thread.sleep(1200);
         AndroidElement firstFromListMagazine = (AndroidElement) driver.findElementsById("com.ocd:id/menu_child_name").get(1);
         firstFromListMagazine.click();
 
@@ -127,8 +127,8 @@ public class BaseTest {
     public void goToCheckedOutViewAllEbookPage() throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, 40);
 
-        TouchAction touchAction = new TouchAction(driver);
-        touchAction.press(PointOption.point(540, 500)).moveTo(PointOption.point(540, 800)).release().perform();
+        //TouchAction touchAction = new TouchAction(driver);
+        //touchAction.press(PointOption.point(540, 500)).moveTo(PointOption.point(540, 800)).release().perform();
 
         Thread.sleep(1500);
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.Button[@text='VIEW ALL']")));
@@ -301,7 +301,7 @@ public class BaseTest {
     }
 
     public void pressComCheckout() {
-        WebDriverWait wait = new WebDriverWait(driver, 49);
+        WebDriverWait wait = new WebDriverWait(driver, 57);
 
         if(driver.findElements(By.xpath("//android.widget.TextView[@text='READ']")).size() != 0){
             driver.findElement(By.xpath("//android.widget.TextView[@text='RETURN']")).click();
