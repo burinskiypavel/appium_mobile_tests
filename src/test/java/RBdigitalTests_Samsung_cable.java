@@ -137,7 +137,7 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
     }
 
     @Test
-    public void Test_04_AudiobookCheckout_Return(){
+    public void Test_04_AudiobookCheckout_Return() throws InterruptedException {
         goToAudiobookPage();
         actualAudioBookTitle = getTitleOfElement(2);
         openElement(2);
@@ -315,7 +315,7 @@ public class RBdigitalTests_Samsung_cable extends BaseTest {
 
 
     @Test
-    public void Test_15_AudiobookWishlist() {
+    public void Test_15_AudiobookWishlist() throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, 40);
 
         goToAudiobookPage();

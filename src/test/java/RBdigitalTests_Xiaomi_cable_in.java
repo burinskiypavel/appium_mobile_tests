@@ -1,19 +1,15 @@
 import Pages.MainPage;
-import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.android.AndroidKeyCode;
 import io.appium.java_client.touch.offset.PointOption;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -22,7 +18,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
-public class RBdigitalTests_Xiaomi_cable extends BaseTest {
+public class RBdigitalTests_Xiaomi_cable_in extends BaseTest {
 
     //WebDriver driver;
     //AppiumDriver driver;
@@ -40,30 +36,27 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
     String ebookHold;
 
 
-    @AfterMethod
-    void AfterMethod() throws InterruptedException {
-        WebDriverWait wait = new WebDriverWait(driver, 45);
-        //wait.until(ExpectedConditions.elementToBeClickable(By.id("com.ocd:id/top_icon_menu")));
+    //@AfterMethod
+    //void AfterMethod() throws InterruptedException {
+    //    WebDriverWait wait = new WebDriverWait(driver, 45);
 
-        if(driver.findElements(By.id("This service is temporarily inaccessible. Please try again later.")).size()!=0){
-            ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
-            Thread.sleep(400);
-            ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
-        }
+    //    if(driver.findElements(By.id("This service is temporarily inaccessible. Please try again later.")).size()!=0){
+     //       ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
+     //       Thread.sleep(400);
+      //      ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
+       // }
 
-        if(driver.findElements(By.id("android:id/message")).size()!=0){
-            driver.findElementById("android:id/button1").click();
-        }
-        //driver.findElementById("com.ocd:id/top_icon_menu").click();
-        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='HOME']")));
-        wait.until(ExpectedConditions.elementToBeClickable(By.id("com.ocd:id/top_icon_menu")));
+       // if(driver.findElements(By.id("android:id/message")).size()!=0){
+       //     driver.findElementById("android:id/button1").click();
+       // }
+       // wait.until(ExpectedConditions.elementToBeClickable(By.id("com.ocd:id/top_icon_menu")));
 
-        do{
-            driver.findElementById("com.ocd:id/top_icon_menu").click();
-        }
-        while (driver.findElementsByXPath("//android.widget.TextView[@text='HOME']").size() == 0);
-        driver.findElementByXPath("//android.widget.TextView[@text='HOME']").click();
-    }
+       // do{
+       //     driver.findElementById("com.ocd:id/top_icon_menu").click();
+       // }
+       // while (driver.findElementsByXPath("//android.widget.TextView[@text='HOME']").size() == 0);
+       // driver.findElementByXPath("//android.widget.TextView[@text='HOME']").click();
+   // }
 
     @BeforeClass
     void beforeClass() throws MalformedURLException {
@@ -99,8 +92,8 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
     @Test
     public void Test_RBdigitalAndroid_ComicCheckout_ReturningExistingItem_SuccessReturning() throws InterruptedException {
         goToComicsPage();
-        actualComTitle = getTitleOfElement(0);
-        openElement(0);
+        actualComTitle = getTitleOfElement(1);
+        openElement(1);
         //String actualComDescription = driver.findElement(By.id("com.ocd:id/activity_media_info_description")).getText();
         pressComCheckout();
         thenIShouldSeeReadBtn();
@@ -290,18 +283,36 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
     public void Test_15_AudiobookWishlist() throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, 40);
 
-        goToAudiobookViewAllPage();
+        goToAudiobookPage();
+
+        AndroidElement viewAllBtn = (AndroidElement) driver.findElement(By.id("com.ocd:id/titles_header_view_all"));
+        viewAllBtn.click();
+
+        ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
+        driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/pagination_two")));
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/filter_label")));
+
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/sort_spinner_text_view")));
 
         AndroidElement titleAudioBook = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_title")).get(1);
         audiobookTitlewishlist = titleAudioBook.getText();
 
         openElement(1);
 
+        //if (driver.findElements(By.xpath("//android.widget.TextView[@text='PLAY']")).size() != 0) {
+        //    driver.findElement(By.xpath("//android.widget.TextView[@text='RETURN']")).click();
+        //    driver.findElement(By.xpath("//android.widget.Button[@text='YES']")).click();
+        //    wait.until(ExpectedConditions.elementToBeClickable(By.id("com.ocd:id/activity_media_info_play")));
+        //}
+
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.TextView[@text='ADD TO WISHLIST']")));
         AndroidElement addToWishlist = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='ADD TO WISHLIST']"));
         addToWishlist.click();
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.TextView[@text='ADD TO WISHLIST']")));
-
     }
 
     @Test
@@ -378,7 +389,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         }
 
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.Button[@text='VIEW ALL']")));
-        AndroidElement viewAllBtnForComics = (AndroidElement) driver.findElements(By.xpath("//android.widget.Button[@text='VIEW ALL']")).get(1);
+        AndroidElement viewAllBtnForComics = (AndroidElement) driver.findElements(By.xpath("//android.widget.Button[@text='VIEW ALL']")).get(0);
         viewAllBtnForComics.click();
 
         Thread.sleep(1000);
@@ -567,10 +578,6 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         //List returnedAudioWishlist =  driver.findElements(By.xpath("//android.widget.TextView[@text='"+audiobookTitlewishlist+"']"));
         //Assert.assertEquals(returnedAudioWishlist.size(), 0);
     }
-
-
-
-
 
 
     //public void swipeVertical(AppiumDriver<MobileElement> driver, double startPercentage, double finalPercentage, int duration){

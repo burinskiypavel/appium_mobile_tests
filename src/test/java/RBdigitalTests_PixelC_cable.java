@@ -159,7 +159,7 @@ public class RBdigitalTests_PixelC_cable extends BaseTest {
 
 
     @Test
-    public void Test_06_AudiobookCheckout(){
+    public void Test_06_AudiobookCheckout() throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, 40);
 
         goToAudiobookPage();
@@ -715,7 +715,7 @@ public class RBdigitalTests_PixelC_cable extends BaseTest {
 
 
     @Test
-    public void Test_15_AudiobookWishlist() {
+    public void Test_15_AudiobookWishlist() throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, 40);
 
         goToAudiobookPage();
@@ -844,7 +844,7 @@ public class RBdigitalTests_PixelC_cable extends BaseTest {
     }
 
     @Test
-    public void Test_19_AudiobookHold() {
+    public void Test_19_AudiobookHold() throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, 30);
 
         goToAudiobookPage();

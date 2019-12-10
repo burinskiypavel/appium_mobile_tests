@@ -168,7 +168,7 @@ public class BaseTest {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/sort_spinner_text_view")));
     }
 
-    public void goToAudiobookPage() {
+    public void goToAudiobookPage() throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, 40);
         AndroidElement iconMenu = (AndroidElement) driver.findElement(By.id("com.ocd:id/top_icon_menu"));
         iconMenu.click();
@@ -177,6 +177,7 @@ public class BaseTest {
         AndroidElement bookTab = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='BOOKS']"));
         bookTab.click();
 
+        Thread.sleep(500);
         AndroidElement firstFromListAudioBook = (AndroidElement) driver.findElementsById("com.ocd:id/menu_child_name").get(1);
         firstFromListAudioBook.click();
 
