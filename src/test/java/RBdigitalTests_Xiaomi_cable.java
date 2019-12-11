@@ -40,7 +40,6 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
     String actualComTitle;
     String actualAudioBookTitle;
     String actualBookTitle;
-    String audiobookHold;
     String ebookHold;
 
 
@@ -89,7 +88,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
     }
 
     @Test
-    public void Test_RBdigital_MagazineCheckout_ReturningExistingItem_SuccessReturning() throws InterruptedException {
+    public void Test_MagazineCheckout_ReturningExistingItem_SuccessReturning() throws InterruptedException {
         goToMagazinePage();
         actualMagTitle = getTitleOfElement(2);
         openElement(2);
@@ -105,7 +104,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
     }
 
     @Test
-    public void Test_RBdigital_ComicCheckout_ReturningExistingItem_SuccessReturning() throws InterruptedException {
+    public void Test_ComicCheckout_ReturningExistingItem_SuccessReturning() throws InterruptedException {
         goToComicsPage();
         actualComTitle = getTitleOfElement(0);
         openElement(0);
@@ -122,7 +121,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
     }
 
     @Test
-    public void Test_RBdigital_AudiobookCheckout_ReturningExistingItem_SuccessReturning() throws InterruptedException {
+    public void Test_AudiobookCheckout_ReturningExistingItem_SuccessReturning() throws InterruptedException {
         goToAudiobookPage();
         actualAudioBookTitle = getTitleOfElement(2);
         openElement(2);
@@ -137,7 +136,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
     }
 
     @Test
-    public void Test_RBdigital_EBookCheckout_ReturningExistingItem_SuccessReturning() throws InterruptedException {
+    public void Test_EBookCheckout_ReturningExistingItem_SuccessReturning() throws InterruptedException {
         goToEBookViewAllPage();
         actualBookTitle = getTitleOfElement(1);
         openElement(1);
@@ -152,7 +151,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
     }
 
     @Test
-    public void Test_RBdigital_SearchMagazineByTitle_Checkout_ReturnFromDetailPage_SuccessReturning(){
+    public void Test_SearchMagazineByTitle_Checkout_ReturnFromDetailPage_SuccessReturning(){
         openSearch();
         searchMagazineByTitle("PREVENTION");
         openElementFromSearchResult(2);
@@ -164,7 +163,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
     }
 
     @Test
-    public void Test_RBdigital_SearchComicByTitle_Checkout_ReturnFromDetailPage_SuccessReturning(){
+    public void Test_SearchComicByTitle_Checkout_ReturnFromDetailPage_SuccessReturning(){
         openSearch();
         searchComicByTitle("MINISULK");
         openElementFromSearchResult(1);
@@ -178,7 +177,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
     }
 
     @Test
-    public void Test_RBdigital_SearchAudiobookByTitle_Checkout_ReturnFromDetailPage_SuccessReturning(){
+    public void Test_SearchAudiobookByTitle_Checkout_ReturnFromDetailPage_SuccessReturning(){
         openSearch();
         searchAudiobookByTitle("KINGS OF THE EARTH");
         openElementFromSearchResult(1);
@@ -192,10 +191,10 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
     }
 
     @Test
-    public void Test_RBdigital_SearchEBookByTitle_Checkout_ReturnFromDetailPage_SuccessReturning(){
+    public void Test_SearchEBookByTitle_Checkout_ReturnFromDetailPage_SuccessReturning(){
         openSearch();
         searchEbookByTitle("SLOB");
-        openElementFromSearchResult(1);
+        openElementFromSearchResult(2);
         String actualEbookDescription = getDescriptionOfElement();
         pressCheckoutEBook();
         thenIShouldSeeReadBtn();
@@ -297,8 +296,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
     public void Test_AudiobookWishlist_ReturnWishlist_SuccessReturning() throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, 40);
         goToAudiobookViewAllPage();
-        AndroidElement titleAudioBook = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_title")).get(1);
-        String audiobookTitlewishlist = titleAudioBook.getText();
+        String audiobookTitlewishlist = getTitleOfElement(1);
         openElement(1);
         pressAddToWishlist();
         goToWishlistViewAllAudioBookPage();
@@ -312,8 +310,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
     public void Test_eBookWishlist_ReturnWishlist_SuccessReturning() throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, 40);
         goToEBookViewAllPage();
-        AndroidElement title = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_title")).get(2);
-        String bookTitlewishlist = title.getText();
+        String bookTitlewishlist = getTitleOfElement(2);
         openElement(2);
         pressAddToWishlist();
         goToWishlistViewAllEbookPage();
@@ -329,7 +326,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         goToAudiobookPage();
         audiobookPage.scrollToMostPopular();
                 //.goToViewAllPage(0);
-        audiobookHold = getTitleOfElement(0);
+        String audiobookHold = getTitleOfElement(0);
         openElement(0);
         commonSteps.pressHold();
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.TextView[@text='HOLD']")));
@@ -345,7 +342,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         goToHoldPage();
         holdPage.onHoldPageScrollToAudiobooks();
         holdPage.removeElement(0);
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//android.widget.TextView[@text='"+audiobookHold+"']")));
+        //wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//android.widget.TextView[@text='"+audiobookHold+"']")));
         //Thread.sleep(3000);
         //List returnedAudioWishlist =  driver.findElements(By.xpath("//android.widget.TextView[@text='"+audiobookTitlewishlist+"']"));
         //Assert.assertEquals(returnedAudioWishlist.size(), 0);
@@ -368,10 +365,9 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.Button[@text='VIEW ALL']")));
         //AndroidElement viewAllBtnForComics = (AndroidElement) driver.findElements(By.xpath("//android.widget.Button[@text='VIEW ALL']")).get(0);
         //viewAllBtnForComics.click();
-
-
-        AndroidElement firstEBook = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_image")).get(0);
-        firstEBook.click();
+        openElement(1);
+        //AndroidElement firstEBook = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_image")).get(0);
+        //firstEBook.click();
 
         ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
