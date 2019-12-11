@@ -129,7 +129,13 @@ public class BaseTest {
 
     public void goToWishlistViewAllEbookPage() throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, 30);
-        driver.findElementById("com.ocd:id/top_icon_menu").click();
+        //driver.findElementById("com.ocd:id/top_icon_menu").click();
+        int count3 = 0;
+        do {
+            driver.findElementById("com.ocd:id/top_icon_menu").click();
+            count3++;
+        }
+        while(driver.findElements(By.xpath("//android.widget.TextView[@text='HOME']")).size() == 0 && count3 < 4);
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='HOME']")));
 
         AndroidElement myAccountTabMenu = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='MY ACCOUNT']"));
@@ -166,9 +172,14 @@ public class BaseTest {
         wait.until(ExpectedConditions.elementToBeClickable(By.id("com.ocd:id/row_media_x")));
     }
 
-    public void goToHoldPage() {
+    public void goToHoldPage() throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, 30);
-        driver.findElementById("com.ocd:id/top_icon_menu").click();
+        int count = 0;
+        do {
+            driver.findElementById("com.ocd:id/top_icon_menu").click();
+            count++;
+        }
+        while(driver.findElements(By.xpath("//android.widget.TextView[@text='HOME']")).size() == 0 && count < 4);
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='HOME']")));
 
         AndroidElement myAccountTabMenu = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='MY ACCOUNT']"));
@@ -181,6 +192,10 @@ public class BaseTest {
         holdTabMenu.click();
 
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='HOLDS']")));
+
+        ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
+        driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
     }
 
     public void goToCheckedOutPage() {

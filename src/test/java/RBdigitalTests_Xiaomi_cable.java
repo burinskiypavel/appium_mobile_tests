@@ -1,4 +1,7 @@
+import Pages.AudiobookPage;
+import Pages.HoldPage;
 import Pages.MainPage;
+import Steps.CommonSteps;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
@@ -28,6 +31,9 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
     //AppiumDriver driver;
     //AndroidDriver driver;
     MainPage mainPage;
+    AudiobookPage audiobookPage;
+    CommonSteps commonSteps;
+    HoldPage holdPage;
     //BaseTest baseTest;
 
     String actualMagTitle;
@@ -74,12 +80,16 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         cap.setCapability("appActivity", "com.ocd.activity.SplashActivity");
         driver = new AndroidDriver(new URL(" http://127.0.0.1:4723/wd/hub"), cap);
         mainPage = new MainPage(driver);
+        audiobookPage = new AudiobookPage(driver);
+        commonSteps = new CommonSteps(driver);
+        holdPage = new HoldPage(driver);
+
         //baseTest = new BaseTest(driver);
         mainPage.Login("qauser", "password1");
     }
 
     @Test
-    public void Test_RBdigitalAndroid_MagazineCheckout_ReturningExistingItem_SuccessReturning() throws InterruptedException {
+    public void Test_RBdigital_MagazineCheckout_ReturningExistingItem_SuccessReturning() throws InterruptedException {
         goToMagazinePage();
         actualMagTitle = getTitleOfElement(2);
         openElement(2);
@@ -95,7 +105,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
     }
 
     @Test
-    public void Test_RBdigitalAndroid_ComicCheckout_ReturningExistingItem_SuccessReturning() throws InterruptedException {
+    public void Test_RBdigital_ComicCheckout_ReturningExistingItem_SuccessReturning() throws InterruptedException {
         goToComicsPage();
         actualComTitle = getTitleOfElement(0);
         openElement(0);
@@ -112,7 +122,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
     }
 
     @Test
-    public void Test_RBdigitalAndroid_AudiobookCheckout_ReturningExistingItem_SuccessReturning() throws InterruptedException {
+    public void Test_RBdigital_AudiobookCheckout_ReturningExistingItem_SuccessReturning() throws InterruptedException {
         goToAudiobookPage();
         actualAudioBookTitle = getTitleOfElement(2);
         openElement(2);
@@ -127,7 +137,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
     }
 
     @Test
-    public void Test_RBdigitalAndroid_EBookCheckout_ReturningExistingItem_SuccessReturning() throws InterruptedException {
+    public void Test_RBdigital_EBookCheckout_ReturningExistingItem_SuccessReturning() throws InterruptedException {
         goToEBookViewAllPage();
         actualBookTitle = getTitleOfElement(1);
         openElement(1);
@@ -142,7 +152,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
     }
 
     @Test
-    public void Test_RBdigitalAndroid_SearchMagazine_Checkout_ReturnFromDetailPage_SuccessReturning(){
+    public void Test_RBdigital_SearchMagazineByTitle_Checkout_ReturnFromDetailPage_SuccessReturning(){
         openSearch();
         searchMagazineByTitle("PREVENTION");
         openElementFromSearchResult(2);
@@ -154,7 +164,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
     }
 
     @Test
-    public void Test_RBdigitalAndroid_SearchComic_Checkout_ReturnFromDetailPage_SuccessReturning(){
+    public void Test_RBdigital_SearchComicByTitle_Checkout_ReturnFromDetailPage_SuccessReturning(){
         openSearch();
         searchComicByTitle("MINISULK");
         openElementFromSearchResult(1);
@@ -168,7 +178,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
     }
 
     @Test
-    public void Test_RBdigitalAndroid_SearchAudiobook_Checkout_ReturnFromDetailPage_SuccessReturning(){
+    public void Test_RBdigital_SearchAudiobookByTitle_Checkout_ReturnFromDetailPage_SuccessReturning(){
         openSearch();
         searchAudiobookByTitle("KINGS OF THE EARTH");
         openElementFromSearchResult(1);
@@ -182,10 +192,10 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
     }
 
     @Test
-    public void Test_RBdigitalAndroid_SearchEBook_Checkout_ReturnFromDetailPage_SuccessReturning(){
+    public void Test_RBdigital_SearchEBookByTitle_Checkout_ReturnFromDetailPage_SuccessReturning(){
         openSearch();
         searchEbookByTitle("SLOB");
-        openElementFromSearchResult(2);
+        openElementFromSearchResult(1);
         String actualEbookDescription = getDescriptionOfElement();
         pressCheckoutEBook();
         thenIShouldSeeReadBtn();
@@ -313,99 +323,29 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//android.widget.TextView[@text='"+bookTitlewishlist+"']")));
     }
 
-    @Test(enabled = false)
-    public void Test_18_Ebook_ReturnWishlist() throws InterruptedException {
-        WebDriverWait wait = new WebDriverWait(driver, 30);
-
-        goToWishlistViewAllEbookPage();
-
-
-        AndroidElement firstXBtn = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_x")).get(0);
-        firstXBtn.click();
-
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("android:id/progress")));
-
-        //wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//android.widget.TextView[@text='"+bookTitlewishlist+"']")));
-    }
-
     @Test
-    public void Test_19_AudiobookHold() throws InterruptedException {
+    public void Test_AudiobookHold_ReturnHold_SuccessReturning() throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, 30);
-
         goToAudiobookPage();
-
-        TouchAction tA = new TouchAction(driver);
-
-        Thread.sleep(1000);
-        int count = 0;
-        while (driver.findElements(By.xpath("//android.widget.TextView[@text='MOST POPULAR']")).size() == 0 && count < 7){
-
-            tA.press(PointOption.point(540, 630)).moveTo(PointOption.point(540, 600)).release().perform();
-            count++;
-        }
-
-        //AndroidElement viewAllBtn = (AndroidElement) driver.findElements(By.id("com.ocd:id/titles_header_view_all")).get(1);
-        //viewAllBtn.click();
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.Button[@text='VIEW ALL']")));
-        AndroidElement viewAllBtnForComics = (AndroidElement) driver.findElements(By.xpath("//android.widget.Button[@text='VIEW ALL']")).get(0);
-        viewAllBtnForComics.click();
-
-        ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
-        driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
-
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/pagination_two")));
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/filter_label")));
-
-
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("com.ocd:id/sort_spinner_text_view")));
-
-        AndroidElement titleAudioBook = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_title")).get(0);
-        audiobookHold = titleAudioBook.getText();
-
+        audiobookPage.scrollToMostPopular();
+                //.goToViewAllPage(0);
+        audiobookHold = getTitleOfElement(0);
         openElement(0);
-
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.TextView[@text='DESCRIPTION']")));
-
-        if (driver.findElements(By.xpath("//android.widget.TextView[@text='REMOVE HOLD']")).size() != 0) {
-            driver.findElement(By.xpath("//android.widget.TextView[@text='REMOVE HOLD']")).click();
-            wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.TextView[@text='HOLD']")));
-        }
-
+        commonSteps.pressHold();
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.TextView[@text='HOLD']")));
-        AndroidElement hold = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='HOLD']"));
-        hold.click();
-
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.TextView[@text='HOLD']")));
+        goToHoldPage();
+        holdPage.onHoldPageScrollToAudiobooks();
+        holdPage.removeElement(0);
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//android.widget.TextView[@text='"+audiobookHold+"']")));
     }
 
-    @Test
-    public void Test_20_AudioBook_ReturnHold() throws InterruptedException {
+    @Test(enabled = false)
+    public void Test_20_Audiobook_ReturnHold() throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, 20);
-
         goToHoldPage();
-
-        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.Button[@text='VIEW ALL']")));
-        //AndroidElement viewAllBtnForComics = (AndroidElement) driver.findElements(By.xpath("//android.widget.Button[@text='VIEW ALL']")).get(0);
-        //viewAllBtnForComics.click();
-
-        ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
-        driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
-
-        //wait.until(ExpectedConditions.elementToBeClickable(By.id("com.ocd:id/row_media_x")));
-        Thread.sleep(700);
-
-        TouchAction touchAction = new TouchAction(driver);
-        touchAction.press(PointOption.point(540, 500)).moveTo(PointOption.point(540, 800)).release().perform();
-
-        wait.until(ExpectedConditions.elementToBeClickable(By.id("com.ocd:id/row_media_x")));
-
-        AndroidElement firstXBtn = (AndroidElement) driver.findElements(By.id("com.ocd:id/row_media_x")).get(0);
-        firstXBtn.click();
-
+        holdPage.onHoldPageScrollToAudiobooks();
+        holdPage.removeElement(0);
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//android.widget.TextView[@text='"+audiobookHold+"']")));
-
         //Thread.sleep(3000);
         //List returnedAudioWishlist =  driver.findElements(By.xpath("//android.widget.TextView[@text='"+audiobookTitlewishlist+"']"));
         //Assert.assertEquals(returnedAudioWishlist.size(), 0);
@@ -440,16 +380,7 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
         AndroidElement titleEBook = (AndroidElement) driver.findElement(By.id("com.ocd:id/activity_media_info_title"));
         ebookHold = titleEBook.getText();
 
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.TextView[@text='DESCRIPTION']")));
-
-        if (driver.findElements(By.xpath("//android.widget.TextView[@text='REMOVE HOLD']")).size() != 0) {
-            driver.findElement(By.xpath("//android.widget.TextView[@text='REMOVE HOLD']")).click();
-            wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.TextView[@text='HOLD']")));
-        }
-
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.TextView[@text='HOLD']")));
-        AndroidElement hold = (AndroidElement) driver.findElement(By.xpath("//android.widget.TextView[@text='HOLD']"));
-        hold.click();
+        commonSteps.pressHold();
 
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.TextView[@text='REMOVE HOLD']")));
 
@@ -461,13 +392,9 @@ public class RBdigitalTests_Xiaomi_cable extends BaseTest {
 
         goToHoldPage();
 
-        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.Button[@text='VIEW ALL']")));
-        //AndroidElement viewAllBtnForComics = (AndroidElement) driver.findElements(By.xpath("//android.widget.Button[@text='VIEW ALL']")).get(0);
-        //viewAllBtnForComics.click();
-
-        ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
-        driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
+        //((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
+        //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//android.widget.TextView[@text='RBdigital']")));
+        //driver.findElement(By.xpath("//android.widget.TextView[@text='RBdigital']")).click();
 
 
         ebookHold = ebookHold.toUpperCase();
